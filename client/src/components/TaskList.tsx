@@ -10,7 +10,7 @@ interface DataTableProps {
     data: any[];
 }
 
-const ToDoList: React.FC<DataTableProps> = ({ columns, data }) => {
+const TaskList: React.FC<DataTableProps> = ({ columns, data }) => {
     return (
         <div className="overflow-x-auto">
             <h1 className="text-2xl">ToDo</h1>
@@ -46,4 +46,4 @@ const ToDoList: React.FC<DataTableProps> = ({ columns, data }) => {
     );
 }
 
-export default ToDoList;
+export default TaskList;
