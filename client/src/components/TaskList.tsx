@@ -1,4 +1,5 @@
 import React from "react";
+import { Pencil, Trash } from "lucide-react";
 
 interface Column {
     label: string,
@@ -35,7 +36,13 @@ const TaskList: React.FC<DataTableProps> = ({ columns, data }) => {
                                     key={column.field} 
                                     className="py-3 px-6 border-b border-gray-200 text-sm text-gray-700"
                                 >
-                                    {row[column.field]}
+                                    {column.field === 'index' ? rowIndex + 1 : 
+                                    column.field === 'actions' ? (
+                                        <div className="flex space-x-4">
+                                          <Pencil className="text-black cursor-pointer" />
+                                          <Trash className="text-black cursor-pointer" />
+                                        </div>
+                                    ) : row[column.field]}
                                 </td>
                             ))}
                         </tr>

@@ -17,15 +17,17 @@ const App: React.FC = () => {
     };
 
     const columns = [
-      { label: 'Name', field: 'name' },
-      { label: 'Age', field: 'age' },
-      { label: 'Email', field: 'email' },
+      { label: '#', field: 'index' },
+      { label: 'タイトル', field: 'title' },
+      { label: '期日', field: 'due_date' },
+      { label: 'ステータス', field: 'status'},
+      { label: '操作', field: 'actions'},
     ];
 
     const data = [
-      { name: 'John Doe', age: 28, email: 'john.doe@example.com' },
-      { name: 'Jane Smith', age: 34, email: 'jane.smith@example.com' },
-      { name: 'Sam Johnson', age: 22, email: 'sam.johnson@example.com' },
+      { title: 'タスク1', due_date: '2024-07-01', status: 'ToDo'},
+      { title: 'タスク2', due_date: '2024-07-02', status: 'Done'},
+      { title: 'タスク3', due_date: '2024-07-03', status: 'Doing'},
     ];
 
     return (
