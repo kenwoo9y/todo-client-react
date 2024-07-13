@@ -17,20 +17,6 @@ const App: React.FC = () => {
       setIsSideMenuOpen(false);
     };
 
-    const columns = [
-      { label: '#', field: 'index' },
-      { label: 'タイトル', field: 'title' },
-      { label: '期日', field: 'due_date' },
-      { label: 'ステータス', field: 'status'},
-      { label: '操作', field: 'actions'},
-    ];
-
-    const data = [
-      { title: 'タスク1', due_date: '2024-07-01', status: 'ToDo'},
-      { title: 'タスク2', due_date: '2024-07-02', status: 'Done'},
-      { title: 'タスク3', due_date: '2024-07-03', status: 'Doing'},
-    ];
-
     return (
       <div className="flex flex-col min-h-screen">
           <Header toggleSideMenu={toggleSideMenu} />
@@ -40,7 +26,7 @@ const App: React.FC = () => {
               <div className="flex justify-end mb-4">
                 <TaskCreate />
               </div>
-              <TaskList columns={columns} data={data} />
+              <TaskList />
             </div>
           </main>
           <Footer />

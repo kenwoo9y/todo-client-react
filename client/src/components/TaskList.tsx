@@ -1,18 +1,37 @@
-import React from "react";
-import { Trash } from "lucide-react";
+import React, { useState } from "react";
 import TaskEdit from "./TaskEdit";
+import TaskDelete from "./TaskDelete";
 
-interface Column {
-    label: string,
-    field: string
+interface Task {
+    index: number;
+    title: string;
+    details: string;
+    due_date: string;
+    status: string;
 }
 
-interface DataTableProps {
-    columns: Column[];
-    data: any[];
-}
+const columns = [
+    { label: '#', field: 'index' },
+    { label: 'タイトル', field: 'title' },
+    { label: '期日', field: 'due_date' },
+    { label: 'ステータス', field: 'status' },
+    { label: '操作', field: 'actions' },
+];
 
-const TaskList: React.FC<DataTableProps> = ({ columns, data }) => {
+const initialData: Task[] = [
+    { index: 1, title: 'Task 1', details: 'Detail 1', due_date: '2024-07-01', status: 'ToDo' },
+    { index: 2, title: 'Task 2', details: 'Detail 2', due_date: '2024-07-02', status: 'Done' },
+    { index: 3, title: 'Task 3', details: 'Detail 3', due_date: '2024-07-03', status: 'Doing' },
+];
+
+const TaskList: React.FC = () => {
+    const [tasks, setTasks] = useState<Task[]>(initialData);
+
+    const handleDelete = (taskId: number) => {
+        const newTasks = tasks.filter((task) => task.index !== taskId);
+        setTasks(newTasks);
+    };
+
     return (
         <div className="overflow-x-auto">
             <h1 className="text-2xl">ToDo</h1>
@@ -30,8 +49,8 @@ const TaskList: React.FC<DataTableProps> = ({ columns, data }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((row, rowIndex) => (
-                        <tr key={rowIndex} className="hover:bg-gray-100">
+                    {tasks.map((row, rowIndex) => (
+                        <tr key={row.index} className="hover:bg-gray-100">
                             {columns.map((column) => (
                                 <td 
                                     key={column.field} 
@@ -40,10 +59,10 @@ const TaskList: React.FC<DataTableProps> = ({ columns, data }) => {
                                     {column.field === 'index' ? rowIndex + 1 : 
                                     column.field === 'actions' ? (
                                         <div className="flex space-x-4">
-                                          <TaskEdit task={row} />
-                                          <Trash className="text-black cursor-pointer" />
+                                            <TaskEdit task={row} />
+                                            <TaskDelete task={row} onDelete={handleDelete} />
                                         </div>
-                                    ) : row[column.field]}
+                                    ) : (row as any)[column.field]}
                                 </td>
                             ))}
                         </tr>
