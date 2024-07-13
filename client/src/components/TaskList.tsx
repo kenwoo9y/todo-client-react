@@ -1,5 +1,6 @@
 import React from "react";
-import { Pencil, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
+import TaskEdit from "./TaskEdit";
 
 interface Column {
     label: string,
@@ -39,7 +40,7 @@ const TaskList: React.FC<DataTableProps> = ({ columns, data }) => {
                                     {column.field === 'index' ? rowIndex + 1 : 
                                     column.field === 'actions' ? (
                                         <div className="flex space-x-4">
-                                          <Pencil className="text-black cursor-pointer" />
+                                          <TaskEdit task={row} />
                                           <Trash className="text-black cursor-pointer" />
                                         </div>
                                     ) : row[column.field]}
