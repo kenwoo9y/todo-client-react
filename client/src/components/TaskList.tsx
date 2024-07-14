@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TaskCreate from "./TaskCreate";
 import TaskEdit from "./TaskEdit";
 import TaskDelete from "./TaskDelete";
 
@@ -34,6 +35,10 @@ const TaskList: React.FC = () => {
 
     return (
         <div className="overflow-x-auto">
+            <div className="flex justify-end mb-4">
+                <TaskCreate />
+            </div>
+            
             <h1 className="text-2xl">ToDo</h1>
             <table className="min-w-full bg-white border border-gray-200">
                 <thead>

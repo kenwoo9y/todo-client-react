@@ -3,8 +3,7 @@ import './index.css'
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SideMenu from "./components/SideMenu";
-import TaskList from "./components/TaskList";
-import TaskCreate from "./components/TaskCreate";
+import AppRouter from "./router/Router";
 
 const App: React.FC = () => {
     const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -23,10 +22,7 @@ const App: React.FC = () => {
           <SideMenu isOpen={isSideMenuOpen} closeSideMenu={closeSideMenu} />
           <main className={`flex-grow pt-16 p-4 transition-all duration-300 ease-in-out ${isSideMenuOpen ? 'ml-64' : ''}`}>
             <div className="container mx-auto p-4 bg-white">
-              <div className="flex justify-end mb-4">
-                <TaskCreate />
-              </div>
-              <TaskList />
+              <AppRouter />
             </div>
           </main>
           <Footer />
