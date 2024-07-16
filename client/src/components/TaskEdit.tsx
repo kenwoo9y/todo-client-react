@@ -17,9 +17,13 @@ const customStyles = {
   },
 };
 
+interface TaskEditProps {
+  task: any;
+}
+
 Modal.setAppElement('#root');
 
-const TaskEdit: React.FC<{ task: any }> = ({ task }) => {
+const TaskEdit: React.FC<TaskEditProps> = ({ task }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {

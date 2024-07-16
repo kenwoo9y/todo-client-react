@@ -17,9 +17,14 @@ const customStyles = {
   },
 };
 
+interface TaskDeleteProps {
+  task: any;
+  onDelete: (taskId: number) => void;
+}
+
 Modal.setAppElement('#root');
 
-const TaskDelete: React.FC<{ task: any, onDelete: (taskId: number) => void }> = ({ task, onDelete }) => {
+const TaskDelete: React.FC<TaskDeleteProps> = ({ task, onDelete }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
