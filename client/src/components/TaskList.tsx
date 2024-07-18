@@ -37,7 +37,7 @@ const TaskList: React.FC = () => {
 
     // 行クリックハンドラ
     const handleRowClick = (taskId: number) => {
-        navigate(`/task/${taskId}`);
+        navigate(`/detail/${taskId}`);
     };
 
     // アイコンクリックハンドラ
