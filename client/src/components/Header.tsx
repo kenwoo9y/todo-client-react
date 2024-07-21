@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSideMenu }) => {
         <header className="bg-blue-500 text-white p-4 flex items-center justify-between z-10 fixed w-full">
             <div className="flex items-center">
                 <HamburgerMenu toggleSideMenu={toggleSideMenu} />
-                <h1 className="text-2xl" onClick={() => handleAppNameClick()}>
+                <h1 className="text-2xl cursor-pointer" onClick={() => handleAppNameClick()}>
                     ToDo App
                 </h1>
             </div>
