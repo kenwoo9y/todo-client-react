@@ -1,16 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import TaskCreate from "./TaskCreate";
 import TaskEdit from "./TaskEdit";
 import TaskDelete from "./TaskDelete";
 import { useNavigate } from "react-router-dom";
-
-interface Task {
-    index: number;
-    title: string;
-    description: string;
-    due_date: string;
-    status: string;
-}
+import useTaskStore from "../stores/useTask";
 
 const columns = [
     { label: '#', field: 'index' },
@@ -20,20 +13,13 @@ const columns = [
     { label: '操作', field: 'actions' },
 ];
 
-const initialData: Task[] = [
-    { index: 1, title: 'Task 1', description: 'Detail 1', due_date: '2024-07-01', status: 'ToDo' },
-    { index: 2, title: 'Task 2', description: 'Detail 2', due_date: '2024-07-02', status: 'Done' },
-    { index: 3, title: 'Task 3', description: 'Detail 3', due_date: '2024-07-03', status: 'Doing' },
-];
-
 const TaskList: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>(initialData);
+    const { tasks, getTasks } = useTaskStore();
     const navigate = useNavigate();
 
-    const handleDelete = (taskId: number) => {
-        const newTasks = tasks.filter((task) => task.index !== taskId);
-        setTasks(newTasks);
-    };
+    useEffect(() => {
+        getTasks();
+    }, [getTasks]);
 
     // 行クリックハンドラ
     const handleRowClick = (taskId: number) => {
@@ -68,9 +54,9 @@ const TaskList: React.FC = () => {
                 <tbody>
                     {tasks.map((row, rowIndex) => (
                         <tr 
-                            key={row.index} 
+                            key={row.id} 
                             className="hover:bg-gray-100 cursor-pointer" 
-                            onClick={() => handleRowClick(row.index)}
+                            onClick={() => handleRowClick(row.id)}
                         >
                             {columns.map((column) => (
                                 <td 
@@ -84,7 +70,7 @@ const TaskList: React.FC = () => {
                                                 <TaskEdit task={row} />
                                             </div>
                                             <div onClick={(event) => iconClick(event)}>
-                                                <TaskDelete task={row} onDelete={handleDelete} />
+                                                <TaskDelete task={row} />
                                             </div>
                                         </div>
                                     ) : (row as any)[column.field]}
