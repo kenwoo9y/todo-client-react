@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { apiClient } from "../plugins/axios";
+import axios from "axios";
 
 interface Task {
     id: number;
@@ -17,12 +18,19 @@ const useTaskStore = () => {
     // タスクを取得する関数
     const getTasks = async () => {
         setLoading(true);
+        setError(null);
+
         try {
-            const response = await apiClient.get('/tasks');
+            const response = await apiClient.get<Task[]>('/tasks');
             setTasks(response.data);
-            setError(null);
-        } catch (error) {
-            setError('Failed to get tasks');
+        } catch (err: any) {
+            if (axios.isAxiosError(err) && err.response) {
+                setError(err.response.data.message || 'Failed to get tasks');
+            } else if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An unknown error occurred');
+            }
         } finally {
             setLoading(false);
         }
