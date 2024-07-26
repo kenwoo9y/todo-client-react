@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import useTaskStore from '../stores/useTask';
 
 const customStyles = {
   content: {
@@ -20,6 +21,11 @@ Modal.setAppElement('#root');
 
 const TaskCreate: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [status, setStatus] = useState('ToDo');
+  const { addTask, loading, error } = useTaskStore();
 
   function openModal() {
     setIsOpen(true);
@@ -27,11 +33,21 @@ const TaskCreate: React.FC = () => {
 
   function closeModal() {
     setIsOpen(false);
+    // フォームのリセット
+    setTitle('');
+    setDescription('');
+    setDueDate('');
+    setStatus('ToDo');
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    // タスク追加のロジックをここに追加
+    await addTask({
+      title,
+      description,
+      due_date: dueDate,
+      status,
+    });
     closeModal();
   }
 
@@ -53,6 +69,8 @@ const TaskCreate: React.FC = () => {
             <label className="block text-sm font-bold mb-2">タイトル</label>
             <input
               type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
@@ -60,6 +78,8 @@ const TaskCreate: React.FC = () => {
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">詳細</label>
             <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               rows={4}
             />
@@ -68,12 +88,16 @@ const TaskCreate: React.FC = () => {
             <label className="block text-sm font-bold mb-2">期日</label>
             <input
               type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">ステータス</label>
             <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               required
             >
@@ -83,7 +107,11 @@ const TaskCreate: React.FC = () => {
             </select>
           </div>
           <div className="flex justify-end space-x-2">
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded shadow">
+            <button 
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded shadow"
+              disabled={loading}
+            >
               追加
             </button>
             <button type="button" onClick={closeModal} className="bg-white text-grey px-4 py-2 rounded shadow border">
