@@ -10,6 +10,13 @@ interface Task {
     status: string;
 }
 
+interface TaskCreate {
+    title: string;
+    description: string;
+    due_date: string;
+    status: string; 
+}
+
 const useTaskStore = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -36,6 +43,27 @@ const useTaskStore = () => {
         }
     };
 
+    // 新しいタスクを追加する関数
+    const addTask = async (newTask: TaskCreate) => {
+        setLoading(true);
+        setError(null);  // Reset error before fetching
+
+        try {
+            const response = await apiClient.post<Task>('/tasks', newTask);
+            setTasks((prevTasks) => [...prevTasks, response.data]);
+        } catch (err: any) {
+            if (axios.isAxiosError(err) && err.response) {
+                setError(err.response.data.message || 'Failed to add task');
+            } else if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An unknown error occurred');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
     // コンポーネントがマウントされたときにタスクを取得
     useEffect(() => {
         getTasks();
@@ -46,6 +74,7 @@ const useTaskStore = () => {
         loading,
         error,
         getTasks,
+        addTask,
     };
 };
 
