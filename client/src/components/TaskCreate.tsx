@@ -64,6 +64,7 @@ const TaskCreate: React.FC = () => {
       >
         <h2>タスク追加</h2>
         <button onClick={closeModal} className="absolute top-2 right-2 text-xl">&times;</button>
+        {error && <p className="text-red-500">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">タイトル</label>
