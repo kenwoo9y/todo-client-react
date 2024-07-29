@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TaskCreate from "./TaskCreate";
 import TaskEdit from "./TaskEdit";
 import TaskDelete from "./TaskDelete";
@@ -14,12 +14,8 @@ const columns = [
 ];
 
 const TaskList: React.FC = () => {
-    const { tasks, getTasks } = useTaskStore();
+    const { tasks } = useTaskStore();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        getTasks();
-    }, [getTasks]);
 
     // 行クリックハンドラ
     const handleRowClick = (taskId: number) => {
