@@ -15,6 +15,7 @@ interface TaskCreate {
     description: string;
     due_date: string;
     status: string; 
+    owner_id: number;
 }
 
 const useTaskStore = () => {

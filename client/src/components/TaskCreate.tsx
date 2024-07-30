@@ -25,6 +25,7 @@ const TaskCreate: React.FC = () => {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [status, setStatus] = useState('ToDo');
+  const [owner_id] = useState(1);
   const { addTask, loading, error } = useTaskStore();
 
   function openModal() {
@@ -47,6 +48,7 @@ const TaskCreate: React.FC = () => {
       description,
       due_date: dueDate,
       status,
+      owner_id,
     });
     closeModal();
   }
