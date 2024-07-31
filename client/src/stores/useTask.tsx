@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { apiClient } from "../plugins/axios";
 import axios from "axios";
 
@@ -64,11 +64,6 @@ const useTaskStore = () => {
             setLoading(false);
         }
     };
-
-    // コンポーネントがマウントされたときにタスクを取得
-    useEffect(() => {
-        getTasks();
-    }, []);
 
     return {
         tasks,
