@@ -26,7 +26,7 @@ const TaskCreate: React.FC = () => {
   const [dueDate, setDueDate] = useState('');
   const [status, setStatus] = useState('ToDo');
   const [owner_id] = useState(1);
-  const { addTask, loading, error } = useTaskStore();
+  const { addTask, getTasks, loading, error } = useTaskStore();
 
   function openModal() {
     setIsOpen(true);
@@ -50,6 +50,8 @@ const TaskCreate: React.FC = () => {
       status,
       owner_id,
     });
+    // タスクを追加した後にタスクリストを再取得
+    await getTasks();
     closeModal();
   }
 
