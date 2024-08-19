@@ -19,12 +19,12 @@ const customStyles = {
 
 interface TaskDeleteProps {
   task: any;
-  onDelete: (taskId: number) => void;
+  // onDelete: (taskId: number) => void;
 }
 
 Modal.setAppElement('#root');
 
-const TaskDelete: React.FC<TaskDeleteProps> = ({ task, onDelete }) => {
+const TaskDelete: React.FC<TaskDeleteProps> = ({ task/*, onDelete*/ }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -36,7 +36,7 @@ const TaskDelete: React.FC<TaskDeleteProps> = ({ task, onDelete }) => {
   }
 
   function handleDelete() {
-    onDelete(task.index);
+    // onDelete(task.index);
     closeModal();
   }
 
