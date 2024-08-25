@@ -8,6 +8,8 @@ interface Task {
     description: string;
     due_date: string;
     status: string;
+    created_at: string;
+    updated_at: string; 
 }
 
 interface TaskCreate {

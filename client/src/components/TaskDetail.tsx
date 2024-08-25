@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useTaskStore from "../stores/useTask";
 
 interface Task {
     id: number;
@@ -15,15 +16,38 @@ const headerTitles = [
     "タイトル", "詳細", "期日", "ステータス", "作成日時", "更新日時"
 ];
 
-const initialData: Task = { id: 1, title: 'Task 1', description: 'Detail 1', due_date: '2024-07-01', status: 'ToDo', created_at: '2024-07-01', updated_at: '2024-07-01' };
-
 const TaskDetail: React.FC = () => {
-    // const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>();  // URLからタスクIDを取得
     const navigate = useNavigate();
-    const [task] = useState<Task | null>(initialData);
+    const { tasks, loading, error, getTasks } = useTaskStore();  // タスクデータとAPI呼び出し関数を取得
+    const [task, setTask] = useState<Task | null>(null);
 
-    if (!task) {
+    // ページが読み込まれたときにタスクを取得する
+    useEffect(() => {
+        if (!tasks.length) {
+            getTasks();  // タスクが空の場合は取得
+        }
+    }, [getTasks, tasks.length]);
+
+    // タスクIDに基づいて特定のタスクを検索
+    useEffect(() => {
+        const foundTask = tasks.find((t) => t.id === Number(id));
+        setTask(foundTask || null);
+    }, [id, tasks]);
+
+    // ロード中の表示
+    if (loading) {
         return <div>Loading...</div>;
+    }
+
+    // エラーメッセージの表示
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    // タスクが存在しない場合
+    if (!task) {
+        return <div>No task found</div>;
     }
 
     return (
@@ -39,34 +63,22 @@ const TaskDetail: React.FC = () => {
 
             <table className="min-w-full bg-white border border-gray-200">
                 <tbody>
-                    <tr>
-                        <td className="border px-4 py-2">{headerTitles[0]}</td>
-                        <td className="border px-4 py-2">{task.title}</td>
-                    </tr>
-                    <tr>
-                        <td className="border px-4 py-2">{headerTitles[1]}</td>
-                        <td className="border px-4 py-2">{task.description}</td>
-                    </tr>
-                    <tr>
-                        <td className="border px-4 py-2">{headerTitles[2]}</td>
-                        <td className="border px-4 py-2">{task.due_date}</td>
-                    </tr>
-                    <tr>
-                        <td className="border px-4 py-2">{headerTitles[3]}</td>
-                        <td className="border px-4 py-2">{task.status}</td>
-                    </tr>
-                    <tr>
-                        <td className="border px-4 py-2">{headerTitles[4]}</td>
-                        <td className="border px-4 py-2">{task.created_at}</td>
-                    </tr>
-                    <tr>
-                        <td className="border px-4 py-2">{headerTitles[5]}</td>
-                        <td className="border px-4 py-2">{task.updated_at}</td>
-                    </tr>
+                    {headerTitles.map((title, index) => (
+                        <tr key={index}>
+                            <td className="border px-4 py-2">{title}</td>
+                            <td className="border px-4 py-2">
+                                {index === 0 ? task.title :
+                                 index === 1 ? task.description :
+                                 index === 2 ? task.due_date :
+                                 index === 3 ? task.status :
+                                 index === 4 ? task.created_at :
+                                 task.updated_at}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
-        
     );
 };
 
