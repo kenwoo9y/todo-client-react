@@ -74,7 +74,7 @@ const TaskList: React.FC = () => {
                                                 <TaskDelete task={row} />
                                             </div>
                                         </div>
-                                    ) : (row as any)[column.field]}
+                                    ) : (row as never)[column.field]}
                                 </td>
                             ))}
                         </tr>
