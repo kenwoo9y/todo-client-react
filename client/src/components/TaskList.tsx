@@ -20,7 +20,7 @@ const TaskList: React.FC = () => {
     // コンポーネントがマウントされたときにタスクを取得
     useEffect(() => {
         getTasks();
-    }, []);
+    }, [getTasks]);
 
     // 行クリックハンドラ
     const handleRowClick = (taskId: number) => {
@@ -34,18 +34,18 @@ const TaskList: React.FC = () => {
 
     return (
         <div className="overflow-x-auto">
-            <div className="flex justify-end mb-4">
+            <div className="mb-4 flex justify-end">
                 <TaskCreate />
             </div>
 
             <h1 className="text-2xl">ToDo</h1>
-            <table className="min-w-full bg-white border border-gray-200">
+            <table className="min-w-full border border-gray-200 bg-white">
                 <thead>
                     <tr>
                         {columns.map((column) => (
                             <th 
                                 key={column.field} 
-                                className="py-3 px-6 border-b border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-700"
+                                className="border-b border-gray-200 bg-gray-100 px-6 py-3 text-left text-sm font-semibold text-gray-700"
                             >
                                 {column.label}
                             </th>
@@ -56,13 +56,13 @@ const TaskList: React.FC = () => {
                     {tasks.map((row, rowIndex) => (
                         <tr 
                             key={row.id} 
-                            className="hover:bg-gray-100 cursor-pointer" 
+                            className="cursor-pointer hover:bg-gray-100" 
                             onClick={() => handleRowClick(row.id)}
                         >
                             {columns.map((column) => (
                                 <td 
                                     key={column.field} 
-                                    className="py-3 px-6 border-b border-gray-200 text-sm text-gray-700"
+                                    className="border-b border-gray-200 px-6 py-3 text-sm text-gray-700"
                                 >
                                     {column.field === 'index' ? rowIndex + 1 : 
                                     column.field === 'actions' ? (
