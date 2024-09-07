@@ -52,16 +52,16 @@ const TaskDetail: React.FC = () => {
 
     return (
         <div className="p-4">
-            <div className="flex mb-4">
+            <div className="mb-4 flex">
                 <button
-                    className="border border-gray-300 text-gray-700 px-4 py-2 rounded"
+                    className="rounded border border-gray-300 px-4 py-2 text-gray-700"
                     onClick={() => navigate('/')}
                 >
                     戻る
                 </button>
             </div>
 
-            <table className="min-w-full bg-white border border-gray-200">
+            <table className="min-w-full border border-gray-200 bg-white">
                 <tbody>
                     {headerTitles.map((title, index) => (
                         <tr key={index}>
