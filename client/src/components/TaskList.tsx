@@ -5,12 +5,20 @@ import TaskDelete from "./TaskDelete";
 import { useNavigate } from "react-router-dom";
 import useTaskStore from "../stores/useTask";
 
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    due_date: string;
+    status: string;
+}
+
 const columns = [
-    { label: '#', field: 'index' },
-    { label: 'タイトル', field: 'title' },
-    { label: '期日', field: 'due_date' },
-    { label: 'ステータス', field: 'status' },
-    { label: '操作', field: 'actions' },
+    { label: '#', field: 'index' as 'index' | keyof Task | 'actions' },
+    { label: 'タイトル', field: 'title' as keyof Task },
+    { label: '期日', field: 'due_date' as keyof Task },
+    { label: 'ステータス', field: 'status' as keyof Task },
+    { label: '操作', field: 'actions' as const },
 ];
 
 const TaskList: React.FC = () => {
@@ -74,7 +82,7 @@ const TaskList: React.FC = () => {
                                                 <TaskDelete task={row} />
                                             </div>
                                         </div>
-                                    ) : (row as never)[column.field]}
+                                    ) : (row)[column.field]}
                                 </td>
                             ))}
                         </tr>
