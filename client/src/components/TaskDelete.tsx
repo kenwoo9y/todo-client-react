@@ -24,7 +24,7 @@ interface TaskDeleteProps {
 
 Modal.setAppElement('#root');
 
-const TaskDelete: React.FC<TaskDeleteProps> = ({ task/*, onDelete*/ }) => {
+const TaskDelete: React.FC<TaskDeleteProps> = ({ task /*, onDelete*/ }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -42,7 +42,10 @@ const TaskDelete: React.FC<TaskDeleteProps> = ({ task/*, onDelete*/ }) => {
 
   return (
     <div>
-      <button onClick={openModal} className="text-black fill-current cursor-pointer">
+      <button
+        onClick={openModal}
+        className="text-black fill-current cursor-pointer"
+      >
         <Trash />
       </button>
       <Modal
@@ -54,12 +57,18 @@ const TaskDelete: React.FC<TaskDeleteProps> = ({ task/*, onDelete*/ }) => {
         <h2>タスク削除</h2>
         <p>このタスクを削除しますか？</p>
         <p className="font-bold">{task.title}</p>
-        <br/>
+        <br />
         <div className="flex justify-end space-x-2">
-          <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded shadow">
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white px-4 py-2 rounded shadow"
+          >
             削除
           </button>
-          <button onClick={closeModal} className="bg-white text-grey px-4 py-2 rounded shadow border">
+          <button
+            onClick={closeModal}
+            className="bg-white text-grey px-4 py-2 rounded shadow border"
+          >
             キャンセル
           </button>
         </div>

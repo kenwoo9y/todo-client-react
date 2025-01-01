@@ -57,7 +57,10 @@ const TaskCreate: React.FC = () => {
 
   return (
     <div className="flex justify-end">
-      <button onClick={openModal} className="bg-blue-500 text-white px-4 py-2 rounded shadow">
+      <button
+        onClick={openModal}
+        className="bg-blue-500 text-white px-4 py-2 rounded shadow"
+      >
         タスク追加
       </button>
       <Modal
@@ -67,7 +70,9 @@ const TaskCreate: React.FC = () => {
         contentLabel="Task Create Modal"
       >
         <h2>タスク追加</h2>
-        <button onClick={closeModal} className="absolute top-2 right-2 text-xl">&times;</button>
+        <button onClick={closeModal} className="absolute top-2 right-2 text-xl">
+          &times;
+        </button>
         {error && <p className="text-red-500">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -112,14 +117,18 @@ const TaskCreate: React.FC = () => {
             </select>
           </div>
           <div className="flex justify-end space-x-2">
-            <button 
+            <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded shadow"
               disabled={loading}
             >
               追加
             </button>
-            <button type="button" onClick={closeModal} className="bg-white text-grey px-4 py-2 rounded shadow border">
+            <button
+              type="button"
+              onClick={closeModal}
+              className="bg-white text-grey px-4 py-2 rounded shadow border"
+            >
               キャンセル
             </button>
           </div>

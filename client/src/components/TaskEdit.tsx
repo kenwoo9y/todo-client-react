@@ -42,7 +42,10 @@ const TaskEdit: React.FC<TaskEditProps> = ({ task }) => {
 
   return (
     <div>
-      <button onClick={openModal} className="text-black fill-current cursor-pointer">
+      <button
+        onClick={openModal}
+        className="text-black fill-current cursor-pointer"
+      >
         <Pencil />
       </button>
       <Modal
@@ -52,7 +55,9 @@ const TaskEdit: React.FC<TaskEditProps> = ({ task }) => {
         contentLabel="Task Edit Modal"
       >
         <h2>タスク編集</h2>
-        <button onClick={closeModal} className="absolute top-2 right-2 text-xl">&times;</button>
+        <button onClick={closeModal} className="absolute top-2 right-2 text-xl">
+          &times;
+        </button>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-bold mb-2">タイトル</label>
@@ -92,10 +97,17 @@ const TaskEdit: React.FC<TaskEditProps> = ({ task }) => {
             </select>
           </div>
           <div className="flex justify-end space-x-2">
-            <button type="submit" className="bg-yellow-500 text-white px-4 py-2 rounded shadow">
+            <button
+              type="submit"
+              className="bg-yellow-500 text-white px-4 py-2 rounded shadow"
+            >
               更新
             </button>
-            <button type="button" onClick={closeModal} className="bg-white text-grey px-4 py-2 rounded shadow border">
+            <button
+              type="button"
+              onClick={closeModal}
+              className="bg-white text-grey px-4 py-2 rounded shadow border"
+            >
               キャンセル
             </button>
           </div>
