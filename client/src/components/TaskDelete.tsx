@@ -44,7 +44,7 @@ const TaskDelete: React.FC<TaskDeleteProps> = ({ task /*, onDelete*/ }) => {
     <div>
       <button
         onClick={openModal}
-        className="text-black fill-current cursor-pointer"
+        className="cursor-pointer fill-current text-black"
       >
         <Trash />
       </button>
@@ -61,13 +61,13 @@ const TaskDelete: React.FC<TaskDeleteProps> = ({ task /*, onDelete*/ }) => {
         <div className="flex justify-end space-x-2">
           <button
             onClick={handleDelete}
-            className="bg-red-500 text-white px-4 py-2 rounded shadow"
+            className="rounded bg-red-500 px-4 py-2 text-white shadow"
           >
             削除
           </button>
           <button
             onClick={closeModal}
-            className="bg-white text-grey px-4 py-2 rounded shadow border"
+            className="text-grey rounded border bg-white px-4 py-2 shadow"
           >
             キャンセル
           </button>

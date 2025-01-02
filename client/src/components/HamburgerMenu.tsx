@@ -7,9 +7,9 @@ interface HamburgerMenuProps {
 const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ toggleSideMenu }) => {
   return (
     <button className="p-2" onClick={toggleSideMenu}>
-      <div className="w-6 h-0.5 bg-white mb-1"></div>
-      <div className="w-6 h-0.5 bg-white mb-1"></div>
-      <div className="w-6 h-0.5 bg-white"></div>
+      <div className="mb-1 h-0.5 w-6 bg-white"></div>
+      <div className="mb-1 h-0.5 w-6 bg-white"></div>
+      <div className="h-0.5 w-6 bg-white"></div>
     </button>
   );
 };

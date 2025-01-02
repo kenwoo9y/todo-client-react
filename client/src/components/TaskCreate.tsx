@@ -59,7 +59,7 @@ const TaskCreate: React.FC = () => {
     <div className="flex justify-end">
       <button
         onClick={openModal}
-        className="bg-blue-500 text-white px-4 py-2 rounded shadow"
+        className="rounded bg-blue-500 px-4 py-2 text-white shadow"
       >
         タスク追加
       </button>
@@ -70,45 +70,45 @@ const TaskCreate: React.FC = () => {
         contentLabel="Task Create Modal"
       >
         <h2>タスク追加</h2>
-        <button onClick={closeModal} className="absolute top-2 right-2 text-xl">
+        <button onClick={closeModal} className="absolute right-2 top-2 text-xl">
           &times;
         </button>
         {error && <p className="text-red-500">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">タイトル</label>
+            <label className="mb-2 block text-sm font-bold">タイトル</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">詳細</label>
+            <label className="mb-2 block text-sm font-bold">詳細</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               rows={4}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">期日</label>
+            <label className="mb-2 block text-sm font-bold">期日</label>
             <input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2">ステータス</label>
+            <label className="mb-2 block text-sm font-bold">ステータス</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               required
             >
               <option value="ToDo">ToDo</option>
@@ -119,7 +119,7 @@ const TaskCreate: React.FC = () => {
           <div className="flex justify-end space-x-2">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded shadow"
+              className="rounded bg-blue-500 px-4 py-2 text-white shadow"
               disabled={loading}
             >
               追加
@@ -127,7 +127,7 @@ const TaskCreate: React.FC = () => {
             <button
               type="button"
               onClick={closeModal}
-              className="bg-white text-grey px-4 py-2 rounded shadow border"
+              className="text-grey rounded border bg-white px-4 py-2 shadow"
             >
               キャンセル
             </button>

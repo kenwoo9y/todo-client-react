@@ -19,13 +19,13 @@ const AppRouter: React.FC = () => {
 
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <Header toggleSideMenu={toggleSideMenu} />
         <SideMenu isOpen={isSideMenuOpen} closeSideMenu={closeSideMenu} />
         <main
-          className={`flex-grow pt-16 p-4 transition-all duration-300 ease-in-out ${isSideMenuOpen ? 'ml-64' : ''}`}
+          className={`grow p-4 pt-16 transition-all duration-300 ease-in-out ${isSideMenuOpen ? 'ml-64' : ''}`}
         >
-          <div className="container mx-auto p-4 bg-white">
+          <div className="container mx-auto bg-white p-4">
             <Routes>
               <Route path="/" element={<TaskList />} />
               <Route path="/detail/:id" element={<TaskDetail />} />

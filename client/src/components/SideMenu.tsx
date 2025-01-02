@@ -18,18 +18,18 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, closeSideMenu }) => {
 
   return (
     <div
-      className={`fixed top-16 left-0 w-64 bg-white text-grey-800 h-full shadow-2xl transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}
+      className={`text-grey-800 fixed left-0 top-16 h-full w-64 bg-white shadow-2xl${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}
     >
       <ul>
         <li
-          className="p-4 flex items-center cursor-pointer"
+          className="flex cursor-pointer items-center p-4"
           onClick={() => handleNavigation('/')}
         >
-          <Home className="w-6 h-6 mr-2" />
+          <Home className="mr-2 size-6" />
           Home
         </li>
-        <li className="p-4 flex items-center cursor-pointer">
-          <MessagesSquare className="w-6 h-6 mr-2" />
+        <li className="flex cursor-pointer items-center p-4">
+          <MessagesSquare className="mr-2 size-6" />
           About
         </li>
       </ul>

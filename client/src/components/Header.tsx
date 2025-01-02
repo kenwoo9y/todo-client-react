@@ -15,18 +15,18 @@ const Header: React.FC<HeaderProps> = ({ toggleSideMenu }) => {
   };
 
   return (
-    <header className="bg-blue-500 text-white p-4 flex items-center justify-between z-10 fixed w-full">
+    <header className="fixed z-10 flex w-full items-center justify-between bg-blue-500 p-4 text-white">
       <div className="flex items-center">
         <HamburgerMenu toggleSideMenu={toggleSideMenu} />
         <h1
-          className="text-2xl cursor-pointer"
+          className="cursor-pointer text-2xl"
           onClick={() => handleAppNameClick()}
         >
           ToDo App
         </h1>
       </div>
-      <div className="flex items-center ml-auto">
-        <LogIn className="w-6 h-6 cursor-pointer" />
+      <div className="ml-auto flex items-center">
+        <LogIn className="size-6 cursor-pointer" />
         <span className="ml-2 cursor-pointer">Sign Out</span>
       </div>
     </header>
