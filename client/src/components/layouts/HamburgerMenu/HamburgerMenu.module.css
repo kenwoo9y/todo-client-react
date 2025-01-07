@@ -1,0 +1,34 @@
+/* react-burger-menu default overrides */
+.bm-burger-button {
+    position: fixed;
+    width: 36px;
+    height: 30px;
+    left: 15px;
+    top: 15px;
+}
+
+.bm-burger-bars {
+    background: #ffffff;
+}
+ 
+.bm-menu {
+    background: #ffffff;
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+}
+
+.bm-item {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    color: #373a47;
+    transition: color 0.2s;
+}
+
+.bm-item:hover {
+    color: #00aaff;
+}
+
+.bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}
