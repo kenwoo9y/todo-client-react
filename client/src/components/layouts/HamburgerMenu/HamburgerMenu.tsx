@@ -7,12 +7,12 @@ import './HamburgerMenu.css';
 export const HamburgerMenu: React.FC = () => {
   return (
     <Menu>
-      <ul className="text-grey-800">
-        <li className="flex cursor-pointer menu-item">
+      <ul>
+        <li className="menu-item flex cursor-pointer">
           <Home className="mr-2 size-6" />
           Home
         </li>
-        <li className="flex cursor-pointer menu-item">
+        <li className="menu-item flex cursor-pointer">
           <MessagesSquare className="mr-2 size-6" />
           About
         </li>
