@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   flexRender,
   useReactTable,
   getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
   ColumnDef,
 } from '@tanstack/react-table';
-import { Pencil, Trash } from 'lucide-react';
+import { ChevronDown, ChevronUp, Pencil, Trash } from 'lucide-react';
 
 /**
  * タスクの型定義
@@ -51,17 +53,24 @@ const data: Task[] = [
  */
 const columns: ColumnDef<Task>[] = [
   {
-    accessorFn: (_, index) => index + 1, // 行番号
     id: 'index',
     header: '#',
-    cell: (info) => info.getValue(),
+    enableSorting: false,
+    cell: (info) => {
+      // 現在の表示順に基づいて番号を振り直す
+      const index = info.table.getRowModel().rows.findIndex(
+        (row) => row.id === info.row.id
+      );
+      return index + 1;
+    },
   },
-  { accessorKey: 'title', header: 'タイトル' },
-  { accessorKey: 'dueDate', header: '期日' },
-  { accessorKey: 'status', header: 'ステータス' },
+  { accessorKey: 'title', header: 'タイトル', sortingFn: 'alphanumeric' },
+  { accessorKey: 'dueDate', header: '期日', sortingFn: 'datetime' },
+  { accessorKey: 'status', header: 'ステータス', sortingFn: 'alphanumeric' },
   {
     accessorKey: 'actions',
     header: '操作',
+    enableSorting: false,
     cell: () => (
       <div className="flex space-x-4">
         <Pencil className="cursor-pointer hover:text-blue-500" />
@@ -79,11 +88,19 @@ const columns: ColumnDef<Task>[] = [
  * - 編集・削除アクションの提供
  */
 const TaskTable: React.FC = () => {
+  // ソート状態
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   // テーブルインスタンスの初期化
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
   });
 
   return (
@@ -102,9 +119,23 @@ const TaskTable: React.FC = () => {
                     key={header.id}
                     className="border border-gray-200 bg-gray-100 px-4 py-2 text-left"
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : header.column.columnDef.header?.toString()}
+                    {header.isPlaceholder ? null : (
+                      <div
+                        className={`flex items-center gap-2 ${
+                          header.column.getCanSort()
+                            ? 'cursor-pointer select-none'
+                            : ''
+                        }`}
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        {header.column.columnDef.header?.toString()}
+                        {/* ソートアイコンの表示 */}
+                        {{
+                          asc: <ChevronUp className="size-4" />,
+                          desc: <ChevronDown className="size-4" />,
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    )}
                   </th>
                 ))}
               </tr>
