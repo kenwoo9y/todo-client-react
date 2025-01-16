@@ -97,7 +97,7 @@ const columns: ColumnDef<Task>[] = [
  * - Tanstack Tableを使用したタスク一覧表示
  * - 編集・削除アクションの提供
  */
-const TaskTable: React.FC = () => {
+export const TaskTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]); // ソート状態
   const [pageSize, setPageSize] = useState(10); // ページサイズの状態
 
@@ -232,5 +232,3 @@ const TaskTable: React.FC = () => {
     </div>
   );
 };
-
-export default TaskTable;
