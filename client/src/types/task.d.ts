@@ -7,4 +7,7 @@ export type Task = {
   description: string;
   dueDate: string;
   status: string;
+  ownerId: number;
+  createdAt: string;
+  updatedAt: string;
 };

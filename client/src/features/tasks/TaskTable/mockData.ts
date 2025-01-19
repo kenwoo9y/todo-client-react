@@ -11,6 +11,9 @@ export const mockTasks: Task[] = [
     description: '説明1',
     dueDate: '2025-01-15',
     status: 'Done',
+    ownerId: 1,
+    createdAt: '2025-01-01',
+    updatedAt: '2025-01-01',
   },
   {
     id: 2,
@@ -18,6 +21,9 @@ export const mockTasks: Task[] = [
     description: '説明2',
     dueDate: '2025-01-20',
     status: 'Doing',
+    ownerId: 2,
+    createdAt: '2025-01-01',
+    updatedAt: '2025-01-01',
   },
   {
     id: 3,
@@ -25,5 +31,8 @@ export const mockTasks: Task[] = [
     description: '説明3',
     dueDate: '2025-01-25',
     status: 'ToDo',
+    ownerId: 3,
+    createdAt: '2025-01-01',
+    updatedAt: '2025-01-01',
   },
 ];
