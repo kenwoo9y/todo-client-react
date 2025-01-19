@@ -17,6 +17,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.64.1",
+    "@tanstack/react-query-devtools": "^5.64.1",
     "@tanstack/react-table": "^8.20.6",
     "@types/react-burger-menu": "^2.8.7",
     "@types/react-modal": "^3.16.3",
