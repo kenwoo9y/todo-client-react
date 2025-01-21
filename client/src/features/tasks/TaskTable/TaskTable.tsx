@@ -8,9 +8,9 @@ import {
   SortingState,
 } from '@tanstack/react-table';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { mockTasks } from './mockData';
 import { TableColumns } from './TableColumns';
 import { TablePagination } from './TablePagination';
+import { useFetchTasks } from '../../../hooks/useTasks';
 
 /**
  * タスクテーブルコンポーネント
@@ -23,9 +23,12 @@ export const TaskTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]); // ソート状態
   const [pageSize, setPageSize] = useState(10); // ページサイズの状態
 
+  // APIからタスクを取得
+  const { data: tasks, isLoading, error } = useFetchTasks();
+
   // テーブルインスタンスの初期化
   const table = useReactTable({
-    data: mockTasks,
+    data: tasks ?? [], // データがない場合は空配列を使用
     columns: TableColumns,
     state: {
       sorting,
@@ -39,6 +42,9 @@ export const TaskTable: React.FC = () => {
     onSortingChange: setSorting,
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
