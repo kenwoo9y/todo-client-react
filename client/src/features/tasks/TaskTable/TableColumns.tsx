@@ -19,7 +19,7 @@ export const TableColumns: ColumnDef<Task>[] = [
     },
   },
   { accessorKey: 'title', header: 'タイトル', sortingFn: 'alphanumeric' },
-  { accessorKey: 'dueDate', header: '期日', sortingFn: 'datetime' },
+  { accessorKey: 'due_date', header: '期日', sortingFn: 'datetime' },
   { accessorKey: 'status', header: 'ステータス', sortingFn: 'alphanumeric' },
   {
     accessorKey: 'actions',
