@@ -11,6 +11,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { TableColumns } from './TableColumns';
 import { TablePagination } from './TablePagination';
 import { useFetchTasks } from '../../../hooks/useTasks';
+import { TaskCreate } from '../TaskCreate';
 
 /**
  * タスクテーブルコンポーネント
@@ -48,6 +49,9 @@ export const TaskTable: React.FC = () => {
 
   return (
     <div>
+      <div className="flex justify-end">
+        <TaskCreate />
+      </div>
       {/* ページタイトル */}
       <h1 className="mb-4 text-2xl font-bold">ToDo</h1>
 
