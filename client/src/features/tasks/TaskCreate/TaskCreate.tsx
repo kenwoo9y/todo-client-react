@@ -45,6 +45,12 @@ export const TaskCreate: React.FC = () => {
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
       >
+        <button
+          onClick={() => setIsOpen(false)}
+          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+        >
+          ✕
+        </button>
         <h2 className="mb-4 text-xl font-bold">新規タスク作成</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
