@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { useCreateTask } from '../../../hooks/useTasks';
 
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
 
 export const TaskCreate: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態
+  const createTask = useCreateTask(); // オプションなしで呼び出し
+
   // フォームデータの状態
   const [formData, setFormData] = useState({
     title: '',
@@ -25,9 +28,21 @@ export const TaskCreate: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: APIを呼び出してタスクを作成
-    console.log(formData);
-    setIsOpen(false);
+    createTask.mutate(
+      { ...formData, owner_id: 1 }, // APIリクエスト時にowner_idを追加
+      {
+        onSuccess: () => {
+          setIsOpen(false);
+          setFormData({ // フォームをリセット
+            title: '',
+            description: '',
+            due_date: '',
+            status: 'ToDo',
+          });
+        },
+        onError: (error: Error) => console.error('タスクの作成に失敗しました:', error),
+      },
+    );
   };
 
   return (
