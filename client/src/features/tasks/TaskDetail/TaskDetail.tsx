@@ -20,6 +20,10 @@ export const TaskDetail: React.FC = () => {
 
   return (
     <div className="w-full">
+      {/* ページタイトル */}
+      <h1 className="mb-4 text-2xl font-bold">タスク詳細</h1>
+
+      {/* タスク詳細テーブル */}
       <table className="min-w-full border-collapse">
         <tbody>
           {taskDetails.map(({ label, value }) => (
