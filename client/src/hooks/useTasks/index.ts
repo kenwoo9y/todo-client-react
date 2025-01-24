@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { taskKeys } from './key';
-import { createTask, fetchTasks } from './function';
+import { createTask, fetchTask, fetchTasks } from './function';
 import { fetchTasksSelector } from './selector';
 
 export const useFetchTasks = () => {
@@ -10,6 +10,14 @@ export const useFetchTasks = () => {
     select: fetchTasksSelector,
   });
 
+  return { data, isLoading, error };
+};
+
+export const useFetchTask = (id: number) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: taskKeys.detail(id),
+    queryFn: () => fetchTask(id),
+  });
   return { data, isLoading, error };
 };
 

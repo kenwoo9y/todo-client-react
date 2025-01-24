@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Provider } from './Provider';
 import { Header } from '../components/layouts/Header';
 import { Footer } from '../components/layouts/Footer';
 import { TaskTable } from '../features/tasks/TaskTable';
-import { Provider } from './Provider';
+import { TaskDetail } from '../features/tasks/TaskDetail/TaskDetail';
 
 const AppRouter: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const AppRouter: React.FC = () => {
             <div className="container mx-auto bg-white p-4">
               <Routes>
                 <Route path="/" element={<TaskTable />} />
+                <Route path="/detail/:id" element={<TaskDetail />} />
               </Routes>
             </div>
           </main>

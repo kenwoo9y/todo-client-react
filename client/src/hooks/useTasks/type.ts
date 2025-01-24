@@ -1,6 +1,7 @@
 import { Task } from '../../types/task';
 
 export type FetchTasksResponse = Task[];
+export type FetchTaskResponse = Task;
 
 export type CreateTaskRequest = {
   title: string;

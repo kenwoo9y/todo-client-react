@@ -12,6 +12,7 @@ import { TableColumns } from './TableColumns';
 import { TablePagination } from './TablePagination';
 import { useFetchTasks } from '../../../hooks/useTasks';
 import { TaskCreate } from '../TaskCreate';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * タスクテーブルコンポーネント
@@ -26,6 +27,8 @@ export const TaskTable: React.FC = () => {
 
   // APIからタスクを取得
   const { data: tasks, isLoading, error } = useFetchTasks();
+
+  const navigate = useNavigate();
 
   // テーブルインスタンスの初期化
   const table = useReactTable({
@@ -91,7 +94,7 @@ export const TaskTable: React.FC = () => {
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="hover:bg-gray-50">
+                <tr key={row.id} className="cursor-pointer hover:bg-gray-50" onClick={() => navigate(`/detail/${row.original.id}`)}>
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
