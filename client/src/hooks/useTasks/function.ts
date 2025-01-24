@@ -1,5 +1,10 @@
 import { apiClient } from '../../lib/axios';
-import { CreateTaskRequest, CreateTaskResponse, FetchTasksResponse, FetchTaskResponse } from './type';
+import {
+  CreateTaskRequest,
+  CreateTaskResponse,
+  FetchTasksResponse,
+  FetchTaskResponse,
+} from './type';
 
 export const fetchTasks = async (): Promise<FetchTasksResponse> => {
   const response = await apiClient.get('/tasks');

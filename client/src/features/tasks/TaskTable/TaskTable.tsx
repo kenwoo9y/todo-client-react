@@ -94,7 +94,11 @@ export const TaskTable: React.FC = () => {
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="cursor-pointer hover:bg-gray-50" onClick={() => navigate(`/detail/${row.original.id}`)}>
+                <tr
+                  key={row.id}
+                  className="cursor-pointer hover:bg-gray-50"
+                  onClick={() => navigate(`/detail/${row.original.id}`)}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}

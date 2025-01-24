@@ -33,14 +33,16 @@ export const TaskCreate: React.FC = () => {
       {
         onSuccess: () => {
           setIsOpen(false);
-          setFormData({ // フォームをリセット
+          setFormData({
+            // フォームをリセット
             title: '',
             description: '',
             due_date: '',
             status: 'ToDo',
           });
         },
-        onError: (error: Error) => console.error('タスクの作成に失敗しました:', error),
+        onError: (error: Error) =>
+          console.error('タスクの作成に失敗しました:', error),
       },
     );
   };
