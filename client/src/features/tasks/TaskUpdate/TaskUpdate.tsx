@@ -71,14 +71,16 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
         )}
         // オーバーレイのクリックでモーダルを閉じる（navigationは防ぐ）
         overlayElement={(props, children) => (
-          <div {...props} onClick={(e) => { 
-            e.stopPropagation();
-            setIsOpen(false);
-          }}
-        >
-          {children}
-        </div>
-      )}
+          <div
+            {...props}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
+          >
+            {children}
+          </div>
+        )}
       >
         <button
           onClick={(e) => {
