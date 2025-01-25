@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { useCreateTask } from '../../../hooks/tasks/useTasks';
+import { useCreateTask } from '../../../hooks/useTasks';
 
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');

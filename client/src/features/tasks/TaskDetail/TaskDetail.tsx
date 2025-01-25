@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useFetchTask } from '../../../hooks/tasks/useTasks';
+import { useFetchTask } from '../../../hooks/useTasks';
 export const TaskDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data: task, isLoading, error } = useFetchTask(Number(id));
