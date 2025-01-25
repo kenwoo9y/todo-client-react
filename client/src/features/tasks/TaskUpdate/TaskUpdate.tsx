@@ -91,7 +91,7 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
         >
           ✕
         </button>
-        <h2 className="mb-4 text-xl font-bold">新規タスク作成</h2>
+        <h2 className="mb-4 text-xl font-bold">タスク編集</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="title" className="mb-2 block text-sm font-bold">
