@@ -12,3 +12,13 @@ export type CreateTaskRequest = {
 };
 
 export type CreateTaskResponse = Task;
+
+export type UpdateTaskRequest = {
+  title: string;
+  description: string;
+  due_date: string;
+  status: string;
+  owner_id: number;
+};
+
+export type UpdateTaskResponse = Task;

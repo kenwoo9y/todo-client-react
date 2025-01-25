@@ -4,6 +4,8 @@ import {
   CreateTaskResponse,
   FetchTasksResponse,
   FetchTaskResponse,
+  UpdateTaskRequest,
+  UpdateTaskResponse,
 } from './type';
 
 export const fetchTasks = async (): Promise<FetchTasksResponse> => {
@@ -20,5 +22,13 @@ export const createTask = async (
   request: CreateTaskRequest,
 ): Promise<CreateTaskResponse> => {
   const response = await apiClient.post('/tasks', request);
+  return response.data;
+};
+
+export const updateTask = async (
+  id: number,
+  request: UpdateTaskRequest,
+): Promise<UpdateTaskResponse> => {
+  const response = await apiClient.patch(`/tasks/${id}`, request);
   return response.data;
 };
