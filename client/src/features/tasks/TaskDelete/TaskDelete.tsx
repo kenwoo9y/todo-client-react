@@ -65,7 +65,7 @@ export const TaskDelete: React.FC<{ task: Task }> = ({ task }) => {
         <h2 className="mb-4 text-xl font-bold">タスク削除</h2>
         <p className="mb-4">以下のタスクを削除しますか？</p>
         <p className="mb-6 text-lg font-medium">{task.title}</p>
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-start gap-4">
           <button
             onClick={(e) => {
               e.stopPropagation();

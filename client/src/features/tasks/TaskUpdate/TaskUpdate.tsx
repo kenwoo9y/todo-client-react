@@ -150,12 +150,23 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
               <option value="Done">Done</option>
             </select>
           </div>
-          <button
-            type="submit"
-            className="rounded bg-yellow-500 px-4 py-2 text-white shadow"
-          >
-            更新
-          </button>
+          <div className="flex justify-start gap-4">
+            <button
+              type="submit"
+              className="rounded bg-yellow-500 px-4 py-2 text-white shadow"
+            >
+              更新
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+              className="rounded border border-gray-300 px-4 py-2 hover:bg-gray-100"
+            >
+              キャンセル
+            </button>
+          </div>
         </form>
       </Modal>
     </>

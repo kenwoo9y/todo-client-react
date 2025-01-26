@@ -127,12 +127,20 @@ export const TaskCreate: React.FC = () => {
               <option value="Done">Done</option>
             </select>
           </div>
-          <button
-            type="submit"
-            className="rounded bg-blue-500 px-4 py-2 text-white shadow"
-          >
-            作成
-          </button>
+          <div className="flex justify-start gap-4">
+            <button
+              type="submit"
+              className="rounded bg-blue-500 px-4 py-2 text-white shadow"
+            >
+              作成
+            </button>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="rounded border border-gray-300 px-4 py-2 hover:bg-gray-100"
+            >
+              キャンセル
+            </button>
+          </div>
         </form>
       </Modal>
     </>
