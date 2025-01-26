@@ -32,3 +32,7 @@ export const updateTask = async (
   const response = await apiClient.patch(`/tasks/${id}`, request);
   return response.data;
 };
+
+export const deleteTask = async (id: number): Promise<void> => {
+  await apiClient.delete(`/tasks/${id}`);
+};

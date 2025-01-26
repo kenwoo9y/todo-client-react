@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Trash } from 'lucide-react';
 import { Task } from '../../../types/task';
 import { TaskUpdate } from '../TaskUpdate/TaskUpdate';
+import { TaskDelete } from '../TaskDelete/TaskDelete';
 
 /**
  * テーブルのカラム定義
@@ -29,7 +29,7 @@ export const TableColumns: ColumnDef<Task>[] = [
     cell: (info) => (
       <div className="flex space-x-4">
         <TaskUpdate task={info.row.original} />
-        <Trash className="cursor-pointer hover:text-red-500" />
+        <TaskDelete task={info.row.original} />
       </div>
     ),
   },

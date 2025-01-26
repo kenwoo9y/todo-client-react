@@ -1,6 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { taskKeys } from './key';
-import { createTask, fetchTask, fetchTasks, updateTask } from './function';
+import {
+  fetchTasks,
+  fetchTask,
+  createTask,
+  updateTask,
+  deleteTask,
+} from './function';
 import { fetchTasksSelector } from './selector';
 import { UpdateTaskRequest, UpdateTaskResponse } from './type';
 
@@ -52,6 +58,22 @@ export const useUpdateTask = () => {
     },
     onError: (error) => {
       console.error('タスクの更新に失敗しました:', error);
+    },
+  });
+
+  return { mutate };
+};
+
+export const useDeleteTask = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation<void, Error, { id: number }>({
+    mutationFn: ({ id }) => deleteTask(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists() });
+    },
+    onError: (error) => {
+      console.error('タスクの削除に失敗しました:', error);
     },
   });
 
