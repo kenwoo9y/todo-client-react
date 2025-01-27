@@ -3,6 +3,7 @@ import { Pencil } from 'lucide-react';
 import Modal from 'react-modal';
 import { Task } from '../../../types/task';
 import { useUpdateTask } from '../../../hooks/useTasks';
+import { Button } from '../../../components/ui/Button/Button';
 
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
@@ -151,21 +152,18 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
             </select>
           </div>
           <div className="flex justify-start gap-4">
-            <button
-              type="submit"
-              className="rounded bg-yellow-500 px-4 py-2 text-white shadow"
-            >
+            <Button variant="primary" color="yellow" type="submit">
               更新
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="secondary"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsOpen(false);
               }}
-              className="rounded border border-gray-300 px-4 py-2 hover:bg-gray-100"
             >
               キャンセル
-            </button>
+            </Button>
           </div>
         </form>
       </Modal>

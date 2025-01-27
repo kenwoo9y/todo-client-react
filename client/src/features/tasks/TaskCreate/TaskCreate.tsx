@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useCreateTask } from '../../../hooks/useTasks';
+import { Button } from '../../../components/ui/Button/Button';
 
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
@@ -128,18 +129,12 @@ export const TaskCreate: React.FC = () => {
             </select>
           </div>
           <div className="flex justify-start gap-4">
-            <button
-              type="submit"
-              className="rounded bg-blue-500 px-4 py-2 text-white shadow"
-            >
+            <Button variant="primary" color="blue" type="submit">
               作成
-            </button>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="rounded border border-gray-300 px-4 py-2 hover:bg-gray-100"
-            >
+            </Button>
+            <Button variant="secondary" onClick={() => setIsOpen(false)}>
               キャンセル
-            </button>
+            </Button>
           </div>
         </form>
       </Modal>
