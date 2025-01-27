@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Trash } from 'lucide-react';
 import Modal from 'react-modal';
 import { Task } from '../../../types/task';
 import { useDeleteTask } from '../../../hooks/useTasks';
-import { Button } from '../../../components/ui/Button/Button';
+import { Button } from '../../../components/ui/Button';
+import { DeleteIcon } from '../../../components/ui/DeleteIcon';
 
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
@@ -19,8 +19,7 @@ export const TaskDelete: React.FC<{ task: Task }> = ({ task }) => {
 
   return (
     <>
-      <Trash
-        className="cursor-pointer hover:text-red-500"
+      <DeleteIcon
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(true);
