@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Pencil } from 'lucide-react';
 import Modal from 'react-modal';
 import { Task } from '../../../types/task';
 import { useUpdateTask } from '../../../hooks/useTasks';
-import { Button } from '../../../components/ui/Button/Button';
-
+import { Button } from '../../../components/ui/Button';
+import { EditIcon } from '../../../components/ui/EditIcon';
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
 
@@ -48,10 +47,9 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
 
   return (
     <>
-      <Pencil
-        className="cursor-pointer hover:text-yellow-500"
+      <EditIcon
         onClick={(e) => {
-          e.stopPropagation(); // クリックイベントの伝播を停止
+          e.stopPropagation();
           setIsOpen(true);
         }}
       />
