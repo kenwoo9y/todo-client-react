@@ -4,6 +4,7 @@ import { Task } from '../../../types/task';
 import { useDeleteTask } from '../../../hooks/useTasks';
 import { Button } from '../../../components/ui/Button';
 import { DeleteIcon } from '../../../components/ui/DeleteIcon';
+import { CloseButton } from '../../../components/ui/CloseButton';
 
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
@@ -53,15 +54,12 @@ export const TaskDelete: React.FC<{ task: Task }> = ({ task }) => {
           </div>
         )}
       >
-        <button
+        <CloseButton
           onClick={(e) => {
-            e.stopPropagation(); // クリックイベントの伝播を停止
+            e.stopPropagation();
             setIsOpen(false);
           }}
-          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
-        >
-          ✕
-        </button>
+        />
         <h2 className="mb-4 text-xl font-bold">タスク削除</h2>
         <p className="mb-4">以下のタスクを削除しますか？</p>
         <p className="mb-6 text-lg font-medium">{task.title}</p>
