@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useCreateTask } from '../../../hooks/useTasks';
 import { Button } from '../../../components/ui/Button';
-import { CloseButton } from '../../../components/ui/CloseButton';
+import { Dialog } from '../../../components/ui/Dialog';
 
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
@@ -58,14 +58,12 @@ export const TaskCreate: React.FC = () => {
         タスク作成
       </button>
 
-      <Modal
-        className="absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg"
-        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+      <Dialog
         isOpen={isOpen}
-        onRequestClose={() => setIsOpen(false)}
+        onClose={() => setIsOpen(false)}
+        title="新規タスク作成"
+        stopPropagation={true}
       >
-        <CloseButton onClick={() => setIsOpen(false)} />
-        <h2 className="mb-4 text-xl font-bold">新規タスク作成</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="title" className="mb-2 block text-sm font-bold">
@@ -133,7 +131,7 @@ export const TaskCreate: React.FC = () => {
             </Button>
           </div>
         </form>
-      </Modal>
+      </Dialog>
     </>
   );
 };

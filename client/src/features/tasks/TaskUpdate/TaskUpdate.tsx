@@ -4,7 +4,8 @@ import { Task } from '../../../types/task';
 import { useUpdateTask } from '../../../hooks/useTasks';
 import { Button } from '../../../components/ui/Button';
 import { EditIcon } from '../../../components/ui/EditIcon';
-import { CloseButton } from '../../../components/ui/CloseButton';
+import { Dialog } from '../../../components/ui/Dialog';
+
 // モーダルのルート要素を設定
 Modal.setAppElement('#root');
 
@@ -55,40 +56,12 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
         }}
       />
 
-      <Modal
-        className="absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg"
-        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+      <Dialog
         isOpen={isOpen}
-        onRequestClose={(e) => {
-          e?.stopPropagation();
-          setIsOpen(false);
-        }}
-        contentElement={(props, children) => (
-          // モーダルの内容をクリックしたときにモーダルが閉じないようにする
-          <div {...props} onClick={(e) => e.stopPropagation()}>
-            {children}
-          </div>
-        )}
-        // オーバーレイのクリックでモーダルを閉じる（navigationは防ぐ）
-        overlayElement={(props, children) => (
-          <div
-            {...props}
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsOpen(false);
-            }}
-          >
-            {children}
-          </div>
-        )}
+        onClose={() => setIsOpen(false)}
+        title="タスク更新"
+        stopPropagation={true}
       >
-        <CloseButton
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsOpen(false);
-          }}
-        />
-        <h2 className="mb-4 text-xl font-bold">タスク編集</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="title" className="mb-2 block text-sm font-bold">
@@ -162,7 +135,7 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
             </Button>
           </div>
         </form>
-      </Modal>
+      </Dialog>
     </>
   );
 };
