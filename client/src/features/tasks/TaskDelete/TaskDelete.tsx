@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
 import { Task } from '../../../types/task';
 import { useDeleteTask } from '../../../hooks/useTasks';
 import { Button } from '../../../components/ui/Button';
 import { DeleteIcon } from '../../../components/ui/DeleteIcon';
 import { Dialog } from '../../../components/ui/Dialog';
-
-// モーダルのルート要素を設定
-Modal.setAppElement('#root');
 
 export const TaskDelete: React.FC<{ task: Task }> = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態

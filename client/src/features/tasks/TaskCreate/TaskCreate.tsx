@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
 import { useCreateTask } from '../../../hooks/useTasks';
 import { Button } from '../../../components/ui/Button';
 import { Dialog } from '../../../components/ui/Dialog';
-
-// モーダルのルート要素を設定
-Modal.setAppElement('#root');
 
 export const TaskCreate: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態
