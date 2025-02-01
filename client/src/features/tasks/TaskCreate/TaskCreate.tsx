@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useCreateTask } from '../../../hooks/useTasks';
-import { Button } from '../../../components/ui/Button';
 import { Dialog } from '../../../components/ui/Dialog';
+import { TaskForm } from '../TaskForm';
 
 export const TaskCreate: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態
@@ -60,73 +60,14 @@ export const TaskCreate: React.FC = () => {
         title="新規タスク作成"
         stopPropagation={true}
       >
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="title" className="mb-2 block text-sm font-bold">
-              タイトル
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full rounded border p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="description"
-              className="mb-2 block text-sm font-bold"
-            >
-              詳細
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full rounded border p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="due_date" className="mb-2 block text-sm font-bold">
-              期日
-            </label>
-            <input
-              type="date"
-              id="due_date"
-              name="due_date"
-              value={formData.due_date}
-              onChange={handleChange}
-              className="w-full rounded border p-2"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="status" className="mb-2 block text-sm font-bold">
-              ステータス
-            </label>
-            <select
-              id="status"
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className="w-full rounded border p-2"
-            >
-              <option value="ToDo">ToDo</option>
-              <option value="Doing">Doing</option>
-              <option value="Done">Done</option>
-            </select>
-          </div>
-          <div className="flex justify-start gap-4">
-            <Button variant="primary" color="blue" type="submit">
-              作成
-            </Button>
-            <Button variant="secondary" onClick={() => setIsOpen(false)}>
-              キャンセル
-            </Button>
-          </div>
-        </form>
+        <TaskForm
+          formData={formData}
+          onSubmit={handleSubmit}
+          onChange={handleChange}
+          onCancel={() => setIsOpen(false)}
+          submitLabel="作成"
+          submitColor="blue"
+        />
       </Dialog>
     </>
   );
