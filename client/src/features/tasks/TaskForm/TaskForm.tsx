@@ -42,6 +42,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           value={formData.title}
           onChange={onChange}
           className="w-full rounded border p-2"
+          maxLength={30}
+          required
         />
       </div>
       <div className="mb-4">
@@ -54,6 +56,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
           value={formData.description}
           onChange={onChange}
           className="w-full rounded border p-2"
+          maxLength={255}
         />
       </div>
       <div className="mb-4">
