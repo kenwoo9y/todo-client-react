@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useFetchTask } from '../../../hooks/useTasks';
+import { formatDateTime } from '../../../utils/dateUtils';
+
 export const TaskDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data: task, isLoading, error } = useFetchTask(Number(id));
@@ -14,8 +16,8 @@ export const TaskDetail: React.FC = () => {
     { label: '詳細', value: task?.description },
     { label: '期日', value: task?.due_date },
     { label: 'ステータス', value: task?.status },
-    { label: '作成日時', value: task?.created_at },
-    { label: '更新日時', value: task?.updated_at },
+    { label: '作成日時', value: formatDateTime(task?.created_at) },
+    { label: '更新日時', value: formatDateTime(task?.updated_at) },
   ];
 
   return (
