@@ -5,6 +5,7 @@ import { Header } from '../components/layouts/Header';
 import { Footer } from '../components/layouts/Footer';
 import { TaskTable } from '../features/tasks/TaskTable';
 import { TaskDetail } from '../features/tasks/TaskDetail/TaskDetail';
+import { AboutPage } from '../features/about/AboutPage/AboutPage';
 
 const AppRouter: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const AppRouter: React.FC = () => {
               <Routes>
                 <Route path="/" element={<TaskTable />} />
                 <Route path="/detail/:id" element={<TaskDetail />} />
+                <Route path="/about" element={<AboutPage />} />
               </Routes>
             </div>
           </main>
