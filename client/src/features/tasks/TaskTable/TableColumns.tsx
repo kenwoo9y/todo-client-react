@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Task } from '../../../types/task';
-import { TaskUpdate } from '../TaskUpdate/TaskUpdate';
-import { TaskDelete } from '../TaskDelete/TaskDelete';
+import { Task } from '@/types/task';
+import { TaskUpdate } from '@/features/tasks/TaskUpdate/TaskUpdate';
+import { TaskDelete } from '@/features/tasks/TaskDelete/TaskDelete';
 
 /**
  * テーブルのカラム定義

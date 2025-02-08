@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Task } from '../../../types/task';
-import { useUpdateTask } from '../../../hooks/useTasks';
-import { EditIcon } from '../../../components/ui/EditIcon';
-import { Dialog } from '../../../components/ui/Dialog';
-import { TaskForm } from '../TaskForm';
+import { Task } from '@/types/task';
+import { useUpdateTask } from '@/hooks/useTasks';
+import { EditIcon } from '@/components/ui/EditIcon';
+import { Dialog } from '@/components/ui/Dialog';
+import { TaskForm } from '@/features/tasks/TaskForm';
 
 export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useCreateTask } from '../../../hooks/useTasks';
-import { Dialog } from '../../../components/ui/Dialog';
-import { TaskForm } from '../TaskForm';
+import { useCreateTask } from '@/hooks/useTasks';
+import { Dialog } from '@/components/ui/Dialog';
+import { TaskForm } from '@/features/tasks/TaskForm';
 
 export const TaskCreate: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態

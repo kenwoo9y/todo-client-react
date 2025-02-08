@@ -6,7 +6,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react';
-import { Task } from '../../../types/task';
+import { Task } from '@/types/task';
 
 interface TaskTablePaginationProps {
   table: Table<Task>;

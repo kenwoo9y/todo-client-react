@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Provider } from './Provider';
-import { Header } from '../components/layouts/Header';
-import { Footer } from '../components/layouts/Footer';
-import { TaskTable } from '../features/tasks/TaskTable';
-import { TaskDetail } from '../features/tasks/TaskDetail/TaskDetail';
-import { AboutPage } from '../features/about/AboutPage/AboutPage';
+import { Provider } from '@/app/Provider';
+import { Header } from '@/components/layouts/Header';
+import { Footer } from '@/components/layouts/Footer';
+import { TaskTable } from '@/features/tasks/TaskTable';
+import { TaskDetail } from '@/features/tasks/TaskDetail/TaskDetail';
+import { AboutPage } from '@/features/about/AboutPage/AboutPage';
 
 const AppRouter: React.FC = () => {
   return (

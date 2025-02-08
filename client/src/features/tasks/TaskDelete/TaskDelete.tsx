@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Task } from '../../../types/task';
-import { useDeleteTask } from '../../../hooks/useTasks';
-import { Button } from '../../../components/ui/Button';
-import { DeleteIcon } from '../../../components/ui/DeleteIcon';
-import { Dialog } from '../../../components/ui/Dialog';
+import { Task } from '@/types/task';
+import { useDeleteTask } from '@/hooks/useTasks';
+import { Button } from '@/components/ui/Button';
+import { DeleteIcon } from '@/components/ui/DeleteIcon';
+import { Dialog } from '@/components/ui/Dialog';
 
 export const TaskDelete: React.FC<{ task: Task }> = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態

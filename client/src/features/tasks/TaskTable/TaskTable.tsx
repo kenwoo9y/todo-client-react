@@ -10,8 +10,8 @@ import {
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { TableColumns } from './TableColumns';
 import { TablePagination } from './TablePagination';
-import { useFetchTasks } from '../../../hooks/useTasks';
-import { TaskCreate } from '../TaskCreate';
+import { useFetchTasks } from '@/hooks/useTasks';
+import { TaskCreate } from '@/features/tasks/TaskCreate';
 import { useNavigate } from 'react-router-dom';
 
 /**

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useFetchTask } from '../../../hooks/useTasks';
-import { formatDateTime } from '../../../utils/dateUtils';
+import { useFetchTask } from '@/hooks/useTasks';
+import { formatDateTime } from '@/utils/dateUtils';
 
 export const TaskDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
