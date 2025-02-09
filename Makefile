@@ -16,6 +16,24 @@ logs: ## Tail docker compose logs
 ps: ## Check container status
 	docker compose ps
 
+test: ## Execute tests
+	cd client && docker compose run todo-app yarn test
+
+test-coverage: ## Execute tests with coverage
+	cd client && docker compose run todo-app yarn test:coverage
+
+lint-check: ## Execute lint check
+	cd client && docker compose run todo-app yarn lint:check
+
+lint-fix: ## Execute lint fix
+	cd client && docker compose run todo-app yarn lint:fix
+
+format-check: ## Execute format check
+	cd client && docker compose run todo-app yarn format:check
+
+format-fix: ## Execute format fix
+	cd client && docker compose run todo-app yarn format:fix
+
 help: ## Show options
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
