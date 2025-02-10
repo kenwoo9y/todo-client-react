@@ -41,4 +41,4 @@ jobs:
 
       # Vitestによるテストとカバレッジ
       - name: Run Vitest with coverage
-        run: yarn coverage
+        run: yarn test:coverage
