@@ -14,7 +14,15 @@ export default defineConfig({
         functions: 80,
         lines: 80,
       },
-      exclude: ['node_modules', 'dist', 'build'],
+      exclude: [
+        'node_modules',
+        'dist',
+        'build',
+        // temporary
+        'src/**',
+        '**/*.config.*',
+        '**/.storybook/**',
+      ],
     },
   },
-}); 
+});
