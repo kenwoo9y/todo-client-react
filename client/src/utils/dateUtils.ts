@@ -1,4 +1,4 @@
-export function formatDateTime(originalDateTime: string) {
+export function formatDateTime(originalDateTime: string | null | undefined) {
   // originalDateTime が null、undefined、または空文字の場合は空文字を返す
   if (!originalDateTime) return '';
 
