@@ -7,6 +7,10 @@ interface DeleteIconProps {
 
 export const DeleteIcon: React.FC<DeleteIconProps> = ({ onClick }) => {
   return (
-    <Trash className="cursor-pointer hover:text-red-500" onClick={onClick} />
+    <Trash
+      className="cursor-pointer hover:text-red-500"
+      onClick={onClick}
+      data-testid="delete-icon"
+    />
   );
 };

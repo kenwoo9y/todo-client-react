@@ -10,6 +10,7 @@ export const EditIcon: React.FC<EditIconProps> = ({ onClick }) => {
     <Pencil
       className="cursor-pointer hover:text-yellow-500"
       onClick={onClick}
+      data-testid="edit-icon"
     />
   );
 };
