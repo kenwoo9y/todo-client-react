@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { userEvent } from '@storybook/test';
 
 describe('HamburgerMenu', () => {
-  it('should render', () => {
+  it('メニュー項目とリンクが正しく表示されること', () => {
     render(
       <BrowserRouter>
         <HamburgerMenu />
@@ -24,7 +24,7 @@ describe('HamburgerMenu', () => {
     expect(aboutLink).toHaveAttribute('href', '/about');
   });
 
-  it('should menu close when click menu item', async () => {
+  it('メニュー項目をクリックするとメニューが閉じること', async () => {
     render(
       <BrowserRouter>
         <HamburgerMenu />

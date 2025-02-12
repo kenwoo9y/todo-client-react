@@ -4,7 +4,7 @@ import { Header } from './Header';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('Header', () => {
-  it('should render', () => {
+  it('必要な要素が正しく表示されること', () => {
     render(
       <BrowserRouter>
         <Header />
