@@ -30,7 +30,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   submitColor = 'blue',
 }) => {
   return (
-    <form onSubmit={onSubmit}>
+    <form role="form" onSubmit={onSubmit}>
       <div className="mb-4">
         <label htmlFor="title" className="mb-2 block text-sm font-bold">
           タイトル
