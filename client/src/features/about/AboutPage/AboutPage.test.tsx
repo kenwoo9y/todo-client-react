@@ -8,6 +8,5 @@ describe('AboutPage', () => {
 
     expect(screen.getByText('About This ToDo App')).toBeInTheDocument();
     expect(screen.getByText('Features')).toBeInTheDocument();
-
   });
 });
