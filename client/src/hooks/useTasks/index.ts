@@ -8,7 +8,7 @@ import {
   deleteTask,
 } from './function';
 import { fetchTasksSelector } from './selector';
-import { UpdateTaskRequest, UpdateTaskResponse } from './type';
+import { UpdateTaskRequest, UpdateTaskResponse } from '@/types/task';
 
 export const useFetchTasks = () => {
   const { data, isLoading, error } = useQuery({

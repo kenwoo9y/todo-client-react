@@ -6,7 +6,7 @@ import {
   FetchTaskResponse,
   UpdateTaskRequest,
   UpdateTaskResponse,
-} from './type';
+} from '@/types/task';
 
 export const fetchTasks = async (): Promise<FetchTasksResponse> => {
   const response = await apiClient.get('/tasks');
