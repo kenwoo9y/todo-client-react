@@ -82,8 +82,18 @@ export const TaskTable: React.FC = () => {
                           {header.column.columnDef.header?.toString()}
                           {/* ソートアイコンの表示 */}
                           {{
-                            asc: <ChevronUp className="size-4" />,
-                            desc: <ChevronDown className="size-4" />,
+                            asc: (
+                              <ChevronUp
+                                className="size-4"
+                                data-testid="chevron-up"
+                              />
+                            ),
+                            desc: (
+                              <ChevronDown
+                                className="size-4"
+                                data-testid="chevron-down"
+                              />
+                            ),
                           }[header.column.getIsSorted() as string] ?? null}
                         </div>
                       )}

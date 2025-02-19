@@ -43,6 +43,7 @@ export const TablePagination: React.FC<TaskTablePaginationProps> = ({
           className="rounded p-1 hover:bg-gray-100 disabled:opacity-50"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
+          aria-label="first"
         >
           <ChevronsLeft className="size-5" />
         </button>
@@ -50,6 +51,7 @@ export const TablePagination: React.FC<TaskTablePaginationProps> = ({
           className="rounded p-1 hover:bg-gray-100 disabled:opacity-50"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          aria-label="previous"
         >
           <ChevronLeft className="size-5" />
         </button>
@@ -62,6 +64,7 @@ export const TablePagination: React.FC<TaskTablePaginationProps> = ({
           className="rounded p-1 hover:bg-gray-100 disabled:opacity-50"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          aria-label="next"
         >
           <ChevronRight className="size-5" />
         </button>
@@ -69,6 +72,7 @@ export const TablePagination: React.FC<TaskTablePaginationProps> = ({
           className="rounded p-1 hover:bg-gray-100 disabled:opacity-50"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
+          aria-label="last"
         >
           <ChevronsRight className="size-5" />
         </button>
