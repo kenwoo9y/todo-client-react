@@ -4,7 +4,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { useFetchTasks } from './index';
 import { fetchTasks } from './function';
 import { fetchTasksSelector } from './selector';
-import { createWrapper } from '../../test/utils/wrapper';
+import { createWrapper } from '@/test/utils/wrapper';
 
 // モックの設定
 vi.mock('./function');
