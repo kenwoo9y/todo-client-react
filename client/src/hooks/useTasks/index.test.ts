@@ -1,8 +1,8 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient } from '@tanstack/react-query';
-import { useFetchTasks, useFetchTask } from './index';
-import { fetchTask, fetchTasks } from './function';
+import { useFetchTasks, useFetchTask, useCreateTask } from './index';
+import { createTask, fetchTask, fetchTasks } from './function';
 import { fetchTasksSelector } from './selector';
 import { createWrapper } from '@/test/utils/wrapper';
 
@@ -144,5 +144,74 @@ describe('useFetchTask', () => {
 
     expect(result.current.data).toBeUndefined();
     expect(fetchTask).toHaveBeenCalledWith(1);
+  });
+});
+
+describe('useCreateTask', () => {
+  let queryClient: QueryClient;
+  let wrapper: React.FC<{ children: React.ReactNode }>;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+    // invalidateQueriesをモック化
+    queryClient.invalidateQueries = vi.fn();
+    wrapper = createWrapper(queryClient);
+  });
+
+  it('正常にタスクを作成できる場合', async () => {
+    const mockTask = {
+      title: '新規タスク',
+      description: '新規タスクの説明',
+      due_date: '2024-03-20',
+      status: 'Todo',
+      owner_id: 1
+    };
+
+    const createdTask = { ...mockTask, id: 1 };
+    (createTask as Mock).mockResolvedValue(createdTask);
+
+    const { result } = renderHook(() => useCreateTask(), { wrapper });
+
+    // mutateを呼び出す
+    result.current.mutate(mockTask);
+
+    await waitFor(() => {
+      expect(createTask).toHaveBeenCalledWith(mockTask);
+      expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
+        queryKey: ['tasks', 'list']
+      });
+    });
+  });
+
+  it('エラーが発生した場合', async () => {
+    const error = new Error('タスクの作成に失敗しました');
+    const consoleSpy = vi.spyOn(console, 'error');
+    const mockTask = {
+      title: '新規タスク',
+      description: '新規タスクの説明',
+      due_date: '2024-03-20',
+      status: 'Todo',
+      owner_id: 1
+    };
+
+    (createTask as Mock).mockRejectedValue(error);
+
+    const { result } = renderHook(() => useCreateTask(), { wrapper });
+
+    // mutateを呼び出す
+    result.current.mutate(mockTask);
+
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith('タスクの作成に失敗しました:', error);
+    });
+
+    consoleSpy.mockRestore();
   });
 });
