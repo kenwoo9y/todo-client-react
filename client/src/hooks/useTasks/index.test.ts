@@ -1,8 +1,8 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient } from '@tanstack/react-query';
-import { useFetchTasks, useFetchTask, useCreateTask, useUpdateTask } from './index';
-import { createTask, fetchTask, fetchTasks, updateTask } from './function';
+import { useFetchTasks, useFetchTask, useCreateTask, useUpdateTask, useDeleteTask } from './index';
+import { createTask, fetchTask, fetchTasks, updateTask, deleteTask } from './function';
 import { fetchTasksSelector } from './selector';
 import { createWrapper } from '@/test/utils/wrapper';
 
@@ -283,6 +283,58 @@ describe('useUpdateTask', () => {
 
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith('タスクの更新に失敗しました:', error);
+    });
+
+    consoleSpy.mockRestore();
+  });
+});
+
+describe('useDeleteTask', () => {
+  let queryClient: QueryClient;
+  let wrapper: React.FC<{ children: React.ReactNode }>;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+    queryClient.invalidateQueries = vi.fn();
+    wrapper = createWrapper(queryClient);
+  });
+
+  it('正常にタスクを削除できる場合', async () => {
+    const taskId = 1;
+    (deleteTask as Mock).mockResolvedValue(undefined);
+
+    const { result } = renderHook(() => useDeleteTask(), { wrapper });
+
+    result.current.mutate({ id: taskId });
+
+    await waitFor(() => {
+      expect(deleteTask).toHaveBeenCalledWith(taskId);
+      expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
+        queryKey: ['tasks', 'list']
+      });
+    });
+  });
+
+  it('エラーが発生した場合', async () => {
+    const error = new Error('タスクの削除に失敗しました');
+    const consoleSpy = vi.spyOn(console, 'error');
+    const taskId = 1;
+
+    (deleteTask as Mock).mockRejectedValue(error);
+
+    const { result } = renderHook(() => useDeleteTask(), { wrapper });
+
+    result.current.mutate({ id: taskId });
+
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith('タスクの削除に失敗しました:', error);
     });
 
     consoleSpy.mockRestore();
