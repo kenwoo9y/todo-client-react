@@ -1,8 +1,20 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient } from '@tanstack/react-query';
-import { useFetchTasks, useFetchTask, useCreateTask, useUpdateTask, useDeleteTask } from './index';
-import { createTask, fetchTask, fetchTasks, updateTask, deleteTask } from './function';
+import {
+  useFetchTasks,
+  useFetchTask,
+  useCreateTask,
+  useUpdateTask,
+  useDeleteTask,
+} from './index';
+import {
+  createTask,
+  fetchTask,
+  fetchTasks,
+  updateTask,
+  deleteTask,
+} from './function';
 import { fetchTasksSelector } from './selector';
 import { createWrapper } from '@/test/utils/wrapper';
 
@@ -25,28 +37,32 @@ describe('useFetchTasks', () => {
   });
 
   it('正常にタスクを取得できる場合', async () => {
-    const mockTasks = [{
-      id: 1,
-      title: 'テストタスク',
-      description: 'テストの説明',
-      due_date: '2024-03-20',
-      status: 'Doing',
-      owner_id: 1,
-      created_at: '2024-03-19T10:00:00Z',
-      updated_at: '2024-03-19T10:00:00Z'
-    }];
-    
-    const mockProcessedTasks = [{
-      id: 1,
-      title: 'テストタスク',
-      description: 'テストの説明',
-      due_date: '2024-03-20',
-      status: 'Doing',
-      owner_id: 1,
-      created_at: '2024-03-19T10:00:00Z',
-      updated_at: '2024-03-19T10:00:00Z'
-    }];
-    
+    const mockTasks = [
+      {
+        id: 1,
+        title: 'テストタスク',
+        description: 'テストの説明',
+        due_date: '2024-03-20',
+        status: 'Doing',
+        owner_id: 1,
+        created_at: '2024-03-19T10:00:00Z',
+        updated_at: '2024-03-19T10:00:00Z',
+      },
+    ];
+
+    const mockProcessedTasks = [
+      {
+        id: 1,
+        title: 'テストタスク',
+        description: 'テストの説明',
+        due_date: '2024-03-20',
+        status: 'Doing',
+        owner_id: 1,
+        created_at: '2024-03-19T10:00:00Z',
+        updated_at: '2024-03-19T10:00:00Z',
+      },
+    ];
+
     (fetchTasks as Mock).mockResolvedValue(mockTasks);
     (fetchTasksSelector as Mock).mockReturnValue(mockProcessedTasks);
 
@@ -107,9 +123,9 @@ describe('useFetchTask', () => {
       status: 'Doing',
       owner_id: 1,
       created_at: '2024-03-19T10:00:00Z',
-      updated_at: '2024-03-19T10:00:00Z'
+      updated_at: '2024-03-19T10:00:00Z',
     };
-    
+
     (fetchTask as Mock).mockResolvedValue(mockTask);
 
     const { result } = renderHook(() => useFetchTask(1), { wrapper });
@@ -139,7 +155,9 @@ describe('useFetchTask', () => {
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
       expect(result.current.error).toBeTruthy();
-      expect(result.current.error?.message).toBe('["tasks","detail",1] data is undefined');
+      expect(result.current.error?.message).toBe(
+        '["tasks","detail",1] data is undefined',
+      );
     });
 
     expect(result.current.data).toBeUndefined();
@@ -171,7 +189,7 @@ describe('useCreateTask', () => {
       description: '新規タスクの説明',
       due_date: '2024-03-20',
       status: 'Todo',
-      owner_id: 1
+      owner_id: 1,
     };
 
     const createdTask = { ...mockTask, id: 1 };
@@ -185,7 +203,7 @@ describe('useCreateTask', () => {
     await waitFor(() => {
       expect(createTask).toHaveBeenCalledWith(mockTask);
       expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
-        queryKey: ['tasks', 'list']
+        queryKey: ['tasks', 'list'],
       });
     });
   });
@@ -198,7 +216,7 @@ describe('useCreateTask', () => {
       description: '新規タスクの説明',
       due_date: '2024-03-20',
       status: 'Todo',
-      owner_id: 1
+      owner_id: 1,
     };
 
     (createTask as Mock).mockRejectedValue(error);
@@ -209,7 +227,10 @@ describe('useCreateTask', () => {
     result.current.mutate(mockTask);
 
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('タスクの作成に失敗しました:', error);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'タスクの作成に失敗しました:',
+        error,
+      );
     });
 
     consoleSpy.mockRestore();
@@ -241,8 +262,8 @@ describe('useUpdateTask', () => {
         description: '更新後の説明',
         due_date: '2024-03-21',
         status: 'Done',
-        owner_id: 1
-      }
+        owner_id: 1,
+      },
     };
 
     const updatedTask = { ...mockUpdateData.request, id: mockUpdateData.id };
@@ -253,9 +274,12 @@ describe('useUpdateTask', () => {
     result.current.mutate(mockUpdateData);
 
     await waitFor(() => {
-      expect(updateTask).toHaveBeenCalledWith(mockUpdateData.id, mockUpdateData.request);
+      expect(updateTask).toHaveBeenCalledWith(
+        mockUpdateData.id,
+        mockUpdateData.request,
+      );
       expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
-        queryKey: ['tasks', 'list']
+        queryKey: ['tasks', 'list'],
       });
     });
   });
@@ -263,7 +287,7 @@ describe('useUpdateTask', () => {
   it('エラーが発生した場合', async () => {
     const error = new Error('タスクの更新に失敗しました');
     const consoleSpy = vi.spyOn(console, 'error');
-    
+
     const mockUpdateData = {
       id: 1,
       request: {
@@ -271,8 +295,8 @@ describe('useUpdateTask', () => {
         description: '更新後の説明',
         due_date: '2024-03-21',
         status: 'Done',
-        owner_id: 1
-      }
+        owner_id: 1,
+      },
     };
 
     (updateTask as Mock).mockRejectedValue(error);
@@ -282,7 +306,10 @@ describe('useUpdateTask', () => {
     result.current.mutate(mockUpdateData);
 
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('タスクの更新に失敗しました:', error);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'タスクの更新に失敗しました:',
+        error,
+      );
     });
 
     consoleSpy.mockRestore();
@@ -317,7 +344,7 @@ describe('useDeleteTask', () => {
     await waitFor(() => {
       expect(deleteTask).toHaveBeenCalledWith(taskId);
       expect(queryClient.invalidateQueries).toHaveBeenCalledWith({
-        queryKey: ['tasks', 'list']
+        queryKey: ['tasks', 'list'],
       });
     });
   });
@@ -334,7 +361,10 @@ describe('useDeleteTask', () => {
     result.current.mutate({ id: taskId });
 
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('タスクの削除に失敗しました:', error);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'タスクの削除に失敗しました:',
+        error,
+      );
     });
 
     consoleSpy.mockRestore();
