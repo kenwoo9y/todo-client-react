@@ -1,8 +1,8 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient } from '@tanstack/react-query';
-import { useFetchTasks } from './index';
-import { fetchTasks } from './function';
+import { useFetchTasks, useFetchTask } from './index';
+import { fetchTask, fetchTasks } from './function';
 import { fetchTasksSelector } from './selector';
 import { createWrapper } from '@/test/utils/wrapper';
 
@@ -79,5 +79,70 @@ describe('useFetchTasks', () => {
     });
 
     expect(result.current.data).toBeUndefined();
+  });
+});
+
+describe('useFetchTask', () => {
+  let queryClient: QueryClient;
+  let wrapper: React.FC<{ children: React.ReactNode }>;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+    wrapper = createWrapper(queryClient);
+  });
+
+  it('正常に単一のタスクを取得できる場合', async () => {
+    const mockTask = {
+      id: 1,
+      title: 'テストタスク',
+      description: 'テストの説明',
+      due_date: '2024-03-20',
+      status: 'Doing',
+      owner_id: 1,
+      created_at: '2024-03-19T10:00:00Z',
+      updated_at: '2024-03-19T10:00:00Z'
+    };
+    
+    (fetchTask as Mock).mockResolvedValue(mockTask);
+
+    const { result } = renderHook(() => useFetchTask(1), { wrapper });
+
+    // 初期状態の確認
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.data).toBeUndefined();
+
+    // データ取得完了後の状態を確認
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+    });
+
+    expect(result.current.data).toEqual(mockTask);
+    expect(result.current.error).toBeNull();
+    expect(fetchTask).toHaveBeenCalledWith(1);
+  });
+
+  it('エラーが発生した場合', async () => {
+    const error = new Error('["tasks","detail",1] data is undefined');
+    vi.clearAllMocks();
+    (fetchTask as Mock).mockReset();
+    (fetchTask as Mock).mockRejectedValue(error);
+
+    const { result } = renderHook(() => useFetchTask(1), { wrapper });
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.error).toBeTruthy();
+      expect(result.current.error?.message).toBe('["tasks","detail",1] data is undefined');
+    });
+
+    expect(result.current.data).toBeUndefined();
+    expect(fetchTask).toHaveBeenCalledWith(1);
   });
 });
