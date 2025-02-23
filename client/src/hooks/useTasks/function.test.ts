@@ -1,12 +1,13 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { apiClient } from '@/lib/axios';
-import { fetchTasks, fetchTask, createTask, updateTask } from './function';
+import { fetchTasks, fetchTask, createTask, updateTask, deleteTask } from './function';
 
 vi.mock('@/lib/axios', () => ({
   apiClient: {
     get: vi.fn(),
     post: vi.fn(),
     patch: vi.fn(),
+    delete: vi.fn(),
   },
 }));
 
@@ -257,5 +258,41 @@ describe('updateTask', () => {
     await expect(updateTask(taskId, invalidRequest)).rejects.toThrow('Validation Error');
     expect(apiClient.patch).toHaveBeenCalledWith(`/tasks/${taskId}`, invalidRequest);
     expect(apiClient.patch).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('deleteTask', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('タスクを正常に削除できること', async () => {
+    const taskId = 1;
+    (apiClient.delete as Mock).mockResolvedValue(undefined);
+
+    await deleteTask(taskId);
+
+    expect(apiClient.delete).toHaveBeenCalledWith(`/tasks/${taskId}`);
+    expect(apiClient.delete).toHaveBeenCalledTimes(1);
+  });
+
+  it('存在しないタスクIDの場合にエラーがスローされること', async () => {
+    const taskId = 999;
+    const error = new Error('Task not found');
+    (apiClient.delete as Mock).mockRejectedValue(error);
+
+    await expect(deleteTask(taskId)).rejects.toThrow('Task not found');
+    expect(apiClient.delete).toHaveBeenCalledWith(`/tasks/${taskId}`);
+    expect(apiClient.delete).toHaveBeenCalledTimes(1);
+  });
+
+  it('APIエラー時にエラーがスローされること', async () => {
+    const taskId = 1;
+    const error = new Error('API Error');
+    (apiClient.delete as Mock).mockRejectedValue(error);
+
+    await expect(deleteTask(taskId)).rejects.toThrow('API Error');
+    expect(apiClient.delete).toHaveBeenCalledWith(`/tasks/${taskId}`);
+    expect(apiClient.delete).toHaveBeenCalledTimes(1);
   });
 });
