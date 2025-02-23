@@ -1,11 +1,12 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { apiClient } from '@/lib/axios';
-import { fetchTasks, fetchTask, createTask } from './function';
+import { fetchTasks, fetchTask, createTask, updateTask } from './function';
 
 vi.mock('@/lib/axios', () => ({
   apiClient: {
     get: vi.fn(),
     post: vi.fn(),
+    patch: vi.fn(),
   },
 }));
 
@@ -184,5 +185,77 @@ describe('createTask', () => {
     await expect(createTask(mockRequest)).rejects.toThrow('API Error');
     expect(apiClient.post).toHaveBeenCalledWith('/tasks', mockRequest);
     expect(apiClient.post).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('updateTask', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('タスクを正常に更新できること', async () => {
+    const taskId = 1;
+    const mockRequest = {
+      title: '更新後のタスク',
+      description: '更新後の説明',
+      due_date: '2024-03-26',
+      status: 'Done',
+      owner_id: 1,
+    };
+
+    const mockResponse = {
+      data: {
+        task: {
+          id: taskId,
+          ...mockRequest,
+          created_at: '2024-03-19T10:00:00Z',
+          updated_at: '2024-03-19T11:00:00Z',
+        },
+      },
+    };
+
+    (apiClient.patch as Mock).mockResolvedValue(mockResponse);
+
+    const result = await updateTask(taskId, mockRequest);
+
+    expect(apiClient.patch).toHaveBeenCalledWith(`/tasks/${taskId}`, mockRequest);
+    expect(apiClient.patch).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(mockResponse.data);
+  });
+
+  it('存在しないタスクIDの場合にエラーがスローされること', async () => {
+    const taskId = 999;
+    const mockRequest = {
+      title: '更新後のタスク',
+      description: '更新後の説明',
+      due_date: '2024-03-26',
+      status: 'Done',
+      owner_id: 1,
+    };
+
+    const error = new Error('Task not found');
+    (apiClient.patch as Mock).mockRejectedValue(error);
+
+    await expect(updateTask(taskId, mockRequest)).rejects.toThrow('Task not found');
+    expect(apiClient.patch).toHaveBeenCalledWith(`/tasks/${taskId}`, mockRequest);
+    expect(apiClient.patch).toHaveBeenCalledTimes(1);
+  });
+
+  it('バリデーションエラー時にエラーがスローされること', async () => {
+    const taskId = 1;
+    const invalidRequest = {
+      title: '', // 空のタイトル
+      description: '更新後の説明',
+      due_date: '2024-03-26',
+      status: 'Done',
+      owner_id: 1,
+    };
+
+    const error = new Error('Validation Error');
+    (apiClient.patch as Mock).mockRejectedValue(error);
+
+    await expect(updateTask(taskId, invalidRequest)).rejects.toThrow('Validation Error');
+    expect(apiClient.patch).toHaveBeenCalledWith(`/tasks/${taskId}`, invalidRequest);
+    expect(apiClient.patch).toHaveBeenCalledTimes(1);
   });
 });
