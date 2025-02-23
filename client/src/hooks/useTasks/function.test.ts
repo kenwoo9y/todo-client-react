@@ -1,10 +1,11 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { apiClient } from '@/lib/axios';
-import { fetchTasks, fetchTask } from './function';
+import { fetchTasks, fetchTask, createTask } from './function';
 
 vi.mock('@/lib/axios', () => ({
   apiClient: {
     get: vi.fn(),
+    post: vi.fn(),
   },
 }));
 
@@ -114,5 +115,74 @@ describe('fetchTask', () => {
     await expect(fetchTask(taskId)).rejects.toThrow('API Error');
     expect(apiClient.get).toHaveBeenCalledWith(`/tasks/${taskId}`);
     expect(apiClient.get).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('createTask', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('タスクを正常に作成できること', async () => {
+    const mockRequest = {
+      title: '新規タスク',
+      description: 'タスクの説明',
+      due_date: '2024-03-25',
+      status: 'Todo',
+      owner_id: 1,
+    };
+
+    const mockResponse = {
+      data: {
+        task: {
+          id: 1,
+          ...mockRequest,
+          created_at: '2024-03-19T10:00:00Z',
+          updated_at: '2024-03-19T10:00:00Z',
+        },
+      },
+    };
+
+    (apiClient.post as Mock).mockResolvedValue(mockResponse);
+
+    const result = await createTask(mockRequest);
+
+    expect(apiClient.post).toHaveBeenCalledWith('/tasks', mockRequest);
+    expect(apiClient.post).toHaveBeenCalledTimes(1);
+    expect(result).toEqual(mockResponse.data);
+  });
+
+  it('バリデーションエラー時にエラーがスローされること', async () => {
+    const invalidRequest = {
+      title: '', // 空のタイトル
+      description: 'タスクの説明',
+      due_date: '2024-03-25',
+      status: 'Todo',
+      owner_id: 1,
+    };
+
+    const error = new Error('Validation Error');
+    (apiClient.post as Mock).mockRejectedValue(error);
+
+    await expect(createTask(invalidRequest)).rejects.toThrow('Validation Error');
+    expect(apiClient.post).toHaveBeenCalledWith('/tasks', invalidRequest);
+    expect(apiClient.post).toHaveBeenCalledTimes(1);
+  });
+
+  it('APIエラー時にエラーがスローされること', async () => {
+    const mockRequest = {
+      title: '新規タスク',
+      description: 'タスクの説明',
+      due_date: '2024-03-25',
+      status: 'Todo',
+      owner_id: 1,
+    };
+
+    const error = new Error('API Error');
+    (apiClient.post as Mock).mockRejectedValue(error);
+
+    await expect(createTask(mockRequest)).rejects.toThrow('API Error');
+    expect(apiClient.post).toHaveBeenCalledWith('/tasks', mockRequest);
+    expect(apiClient.post).toHaveBeenCalledTimes(1);
   });
 });
