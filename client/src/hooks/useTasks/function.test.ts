@@ -1,6 +1,12 @@
 import { vi, describe, it, expect, Mock, beforeEach } from 'vitest';
 import { apiClient } from '@/lib/axios';
-import { fetchTasks, fetchTask, createTask, updateTask, deleteTask } from './function';
+import {
+  fetchTasks,
+  fetchTask,
+  createTask,
+  updateTask,
+  deleteTask,
+} from './function';
 
 vi.mock('@/lib/axios', () => ({
   apiClient: {
@@ -166,7 +172,9 @@ describe('createTask', () => {
     const error = new Error('Validation Error');
     (apiClient.post as Mock).mockRejectedValue(error);
 
-    await expect(createTask(invalidRequest)).rejects.toThrow('Validation Error');
+    await expect(createTask(invalidRequest)).rejects.toThrow(
+      'Validation Error',
+    );
     expect(apiClient.post).toHaveBeenCalledWith('/tasks', invalidRequest);
     expect(apiClient.post).toHaveBeenCalledTimes(1);
   });
@@ -219,7 +227,10 @@ describe('updateTask', () => {
 
     const result = await updateTask(taskId, mockRequest);
 
-    expect(apiClient.patch).toHaveBeenCalledWith(`/tasks/${taskId}`, mockRequest);
+    expect(apiClient.patch).toHaveBeenCalledWith(
+      `/tasks/${taskId}`,
+      mockRequest,
+    );
     expect(apiClient.patch).toHaveBeenCalledTimes(1);
     expect(result).toEqual(mockResponse.data);
   });
@@ -237,8 +248,13 @@ describe('updateTask', () => {
     const error = new Error('Task not found');
     (apiClient.patch as Mock).mockRejectedValue(error);
 
-    await expect(updateTask(taskId, mockRequest)).rejects.toThrow('Task not found');
-    expect(apiClient.patch).toHaveBeenCalledWith(`/tasks/${taskId}`, mockRequest);
+    await expect(updateTask(taskId, mockRequest)).rejects.toThrow(
+      'Task not found',
+    );
+    expect(apiClient.patch).toHaveBeenCalledWith(
+      `/tasks/${taskId}`,
+      mockRequest,
+    );
     expect(apiClient.patch).toHaveBeenCalledTimes(1);
   });
 
@@ -255,8 +271,13 @@ describe('updateTask', () => {
     const error = new Error('Validation Error');
     (apiClient.patch as Mock).mockRejectedValue(error);
 
-    await expect(updateTask(taskId, invalidRequest)).rejects.toThrow('Validation Error');
-    expect(apiClient.patch).toHaveBeenCalledWith(`/tasks/${taskId}`, invalidRequest);
+    await expect(updateTask(taskId, invalidRequest)).rejects.toThrow(
+      'Validation Error',
+    );
+    expect(apiClient.patch).toHaveBeenCalledWith(
+      `/tasks/${taskId}`,
+      invalidRequest,
+    );
     expect(apiClient.patch).toHaveBeenCalledTimes(1);
   });
 });
