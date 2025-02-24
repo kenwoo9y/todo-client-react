@@ -3,15 +3,17 @@ import { Header } from './Header';
 import { BrowserRouter } from 'react-router-dom';
 
 const meta = {
-  title: 'Components/Layout/Header',
+  title: 'Components/Layouts/Header',
   component: Header,
-  decorators: [(Story) => (
-    <BrowserRouter>
-      <div style={{ margin: 0, padding: 0, width: '100%' }}>
-        <Story />
-      </div>
-    </BrowserRouter>
-  )],
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <div style={{ margin: 0, padding: 0, width: '100%' }}>
+          <Story />
+        </div>
+      </BrowserRouter>
+    ),
+  ],
   parameters: {
     layout: 'fullscreen',
     backgrounds: {
