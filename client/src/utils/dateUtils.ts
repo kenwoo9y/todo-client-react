@@ -14,7 +14,10 @@ export function formatDateTime(originalDateTime: string | null | undefined) {
     timeZone: 'Asia/Tokyo', // 明示的にタイムゾーンを指定
   };
 
-  const formattedDateTime = date.toLocaleDateString('ja-JP', options);
+  const formattedDateTime = date
+    .toLocaleDateString('ja-JP', options)
+    .replace(/\//g, '-')
+    .replace(/\s/g, ' ');
 
   return formattedDateTime;
 }
