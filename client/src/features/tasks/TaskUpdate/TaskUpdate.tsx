@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Task } from '@/types/task';
 import { useUpdateTask } from '@/hooks/useTasks';
 import { EditIcon } from '@/components/ui/EditIcon';
 import { Dialog } from '@/components/ui/Dialog';
 import { TaskForm } from '@/features/tasks/TaskForm';
 
-export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
+interface TaskUpdateProps {
+  task: Task;
+  onSuccess?: () => void;
+}
+
+export const TaskUpdate: React.FC<TaskUpdateProps> = ({ task, onSuccess }) => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態
   const updateTask = useUpdateTask();
 
-  // フォームデータの状態
+  // taskが更新されるたびにフォームデータを更新
   const [formData, setFormData] = useState({
     title: task.title,
     description: task.description,
     due_date: task.due_date,
     status: task.status,
   });
+
+  // taskが変更されたときにフォームデータを更新
+  useEffect(() => {
+    setFormData({
+      title: task.title,
+      description: task.description,
+      due_date: task.due_date,
+      status: task.status,
+    });
+  }, [task]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -36,6 +51,9 @@ export const TaskUpdate: React.FC<{ task: Task }> = ({ task }) => {
       {
         onSuccess: () => {
           setIsOpen(false);
+          if (onSuccess) {
+            onSuccess();
+          }
         },
         onError: (error: Error) =>
           console.error('タスクの更新に失敗しました:', error),

@@ -6,7 +6,7 @@ import { TaskDelete } from '@/features/tasks/TaskDelete/TaskDelete';
 /**
  * テーブルのカラム定義
  */
-export const TableColumns: ColumnDef<Task>[] = [
+export const TableColumns: ColumnDef<Task, unknown>[] = [
   {
     id: 'index',
     header: '#',
@@ -28,7 +28,12 @@ export const TableColumns: ColumnDef<Task>[] = [
     enableSorting: false,
     cell: (info) => (
       <div className="flex space-x-4">
-        <TaskUpdate task={info.row.original} />
+        <TaskUpdate 
+          task={info.row.original} 
+          onSuccess={() => {
+            (info.table.options.meta as { refetch: () => void })?.refetch?.()
+          }} 
+        />
         <TaskDelete task={info.row.original} />
       </div>
     ),

@@ -2,10 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useFetchTask } from '@/hooks/useTasks';
 import { formatDateTime } from '@/utils/dateUtils';
+import { TaskUpdate } from '@/features/tasks/TaskUpdate/TaskUpdate';
 
 export const TaskDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: task, isLoading, error } = useFetchTask(Number(id));
+  const { data: task, isLoading, error, refetch } = useFetchTask(Number(id));
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -22,6 +23,11 @@ export const TaskDetail: React.FC = () => {
 
   return (
     <div className="w-full">
+      {/* 操作ボタン */}
+      <div className="mb-4 flex justify-end gap-2">
+        <TaskUpdate task={task} onSuccess={refetch} />
+      </div>
+
       {/* ページタイトル */}
       <h1 className="mb-4 text-2xl font-bold">タスク詳細</h1>
 

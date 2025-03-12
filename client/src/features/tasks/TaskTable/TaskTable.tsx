@@ -26,7 +26,7 @@ export const TaskTable: React.FC = () => {
   const [pageSize, setPageSize] = useState(10); // ページサイズの状態
 
   // APIからタスクを取得
-  const { data: tasks, isLoading, error } = useFetchTasks();
+  const { data: tasks, isLoading, error, refetch } = useFetchTasks();
 
   const navigate = useNavigate();
 
@@ -34,6 +34,9 @@ export const TaskTable: React.FC = () => {
   const table = useReactTable({
     data: tasks ?? [], // データがない場合は空配列を使用
     columns: TableColumns,
+    meta: {
+      refetch: refetch
+    },
     state: {
       sorting,
       pagination: {

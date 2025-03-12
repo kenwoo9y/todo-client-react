@@ -11,21 +11,21 @@ import { fetchTasksSelector } from './selector';
 import { UpdateTaskRequest, UpdateTaskResponse } from '@/types/task';
 
 export const useFetchTasks = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: taskKeys.lists(),
     queryFn: fetchTasks,
     select: fetchTasksSelector,
   });
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 export const useFetchTask = (id: number) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: taskKeys.detail(id),
     queryFn: () => fetchTask(id),
   });
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 export const useCreateTask = () => {
@@ -50,11 +50,12 @@ export const useUpdateTask = () => {
   const { mutate } = useMutation<
     UpdateTaskResponse,
     Error,
-    { id: number; request: UpdateTaskRequest }
+    { id: number; request: UpdateTaskRequest; onSuccess?: () => void }
   >({
     mutationFn: ({ id, request }) => updateTask(id, request),
-    onSuccess: () => {
+    onSuccess: (_, { onSuccess }) => {
       queryClient.invalidateQueries({ queryKey: taskKeys.lists() });
+      onSuccess?.();
     },
     onError: (error) => {
       console.error('タスクの更新に失敗しました:', error);
