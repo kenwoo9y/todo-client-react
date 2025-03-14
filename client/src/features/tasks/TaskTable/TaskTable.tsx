@@ -35,7 +35,7 @@ export const TaskTable: React.FC = () => {
     data: tasks ?? [], // データがない場合は空配列を使用
     columns: TableColumns,
     meta: {
-      refetch: refetch
+      refetch: refetch,
     },
     state: {
       sorting,

@@ -28,11 +28,11 @@ export const TableColumns: ColumnDef<Task, unknown>[] = [
     enableSorting: false,
     cell: (info) => (
       <div className="flex space-x-4">
-        <TaskUpdate 
-          task={info.row.original} 
+        <TaskUpdate
+          task={info.row.original}
           onSuccess={() => {
-            (info.table.options.meta as { refetch: () => void })?.refetch?.()
-          }} 
+            (info.table.options.meta as { refetch: () => void })?.refetch?.();
+          }}
         />
         <TaskDelete task={info.row.original} />
       </div>
