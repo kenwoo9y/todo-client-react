@@ -1,11 +1,13 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useFetchTask } from '@/hooks/useTasks';
 import { formatDateTime } from '@/utils/dateUtils';
 import { TaskUpdate } from '@/features/tasks/TaskUpdate/TaskUpdate';
+import { TaskDelete } from '@/features/tasks/TaskDelete/TaskDelete';
 
 export const TaskDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { data: task, isLoading, error, refetch } = useFetchTask(Number(id));
 
   if (isLoading) return <div>Loading...</div>;
@@ -21,11 +23,16 @@ export const TaskDetail: React.FC = () => {
     { label: '更新日時', value: formatDateTime(task?.updated_at) },
   ];
 
+  const handleDeleteSuccess = () => {
+    navigate('/');
+  };
+
   return (
     <div className="w-full">
       {/* 操作ボタン */}
       <div className="mb-4 flex justify-end gap-2">
         <TaskUpdate task={task} onSuccess={refetch} />
+        <TaskDelete task={task} onSuccess={handleDeleteSuccess} />
       </div>
 
       {/* ページタイトル */}

@@ -5,13 +5,21 @@ import { Button } from '@/components/ui/Button';
 import { DeleteIcon } from '@/components/ui/DeleteIcon';
 import { Dialog } from '@/components/ui/Dialog';
 
-export const TaskDelete: React.FC<{ task: Task }> = ({ task }) => {
+interface TaskDeleteProps {
+  task: Task;
+  onSuccess?: () => void;
+}
+
+export const TaskDelete: React.FC<TaskDeleteProps> = ({ task, onSuccess }) => {
   const [isOpen, setIsOpen] = useState(false); // モーダルの表示状態
   const deleteTask = useDeleteTask();
 
   const handleSubmit = () => {
     deleteTask.mutate({ id: task.id });
     setIsOpen(false);
+    if (onSuccess) {
+      onSuccess();
+    }
   };
 
   return (
