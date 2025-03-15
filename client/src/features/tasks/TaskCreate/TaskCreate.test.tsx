@@ -39,7 +39,7 @@ describe('TaskCreate', () => {
     fireEvent.click(screen.getByText('タスク作成'));
 
     // タイトルの入力をテスト
-    const titleInput = screen.getByLabelText('タイトル');
+    const titleInput = screen.getByLabelText('タイトル*');
     await userEvent.type(titleInput, 'テストタスク');
     expect(titleInput).toHaveValue('テストタスク');
 
@@ -54,7 +54,7 @@ describe('TaskCreate', () => {
     expect(dueDateInput).toHaveValue('2024-12-31');
 
     // ステータスの選択をテスト
-    const statusSelect = screen.getByLabelText('ステータス');
+    const statusSelect = screen.getByLabelText('ステータス*');
     await userEvent.selectOptions(statusSelect, 'Doing');
     expect(statusSelect).toHaveValue('Doing');
   });
@@ -78,7 +78,7 @@ describe('TaskCreate', () => {
     fireEvent.click(screen.getByText('タスク作成'));
 
     // フォームに入力
-    await userEvent.type(screen.getByLabelText('タイトル'), 'テストタスク');
+    await userEvent.type(screen.getByLabelText('タイトル*'), 'テストタスク');
     await userEvent.type(screen.getByLabelText('詳細'), 'テストの詳細');
     await userEvent.type(screen.getByLabelText('期日'), '2024-12-31');
 
@@ -105,7 +105,7 @@ describe('TaskCreate', () => {
     fireEvent.click(screen.getByText('タスク作成'));
 
     // フォームに入力
-    await userEvent.type(screen.getByLabelText('タイトル'), 'テストタスク');
+    await userEvent.type(screen.getByLabelText('タイトル*'), 'テストタスク');
 
     // フォームを送信
     fireEvent.click(screen.getByText('作成'));
@@ -150,7 +150,7 @@ describe('TaskCreate', () => {
     fireEvent.click(screen.getByText('タスク作成'));
 
     // フォームに入力
-    await userEvent.type(screen.getByLabelText('タイトル'), 'テストタスク');
+    await userEvent.type(screen.getByLabelText('タイトル*'), 'テストタスク');
 
     // フォームを送信
     fireEvent.click(screen.getByText('作成'));

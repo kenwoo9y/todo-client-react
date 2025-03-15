@@ -62,7 +62,7 @@ describe('TaskUpdate', () => {
     fireEvent.click(screen.getByTestId('edit-icon'));
 
     // タイトルを更新
-    const titleInput = screen.getByLabelText('タイトル');
+    const titleInput = screen.getByLabelText('タイトル*');
     fireEvent.change(titleInput, { target: { value: '更新されたタイトル' } });
 
     expect(titleInput).toHaveValue('更新されたタイトル');
@@ -103,7 +103,7 @@ describe('TaskUpdate', () => {
     fireEvent.click(screen.getByTestId('edit-icon'));
 
     // フォームを更新して送信
-    const titleInput = screen.getByLabelText('タイトル');
+    const titleInput = screen.getByLabelText('タイトル*');
     fireEvent.change(titleInput, { target: { value: '更新されたタイトル' } });
 
     const submitButton = screen.getByText('更新');
@@ -164,7 +164,7 @@ describe('TaskUpdate', () => {
     fireEvent.click(screen.getByTestId('edit-icon'));
 
     // タイトルの入力をテスト
-    const titleInput = screen.getByLabelText('タイトル');
+    const titleInput = screen.getByLabelText('タイトル*');
     fireEvent.change(titleInput, { target: { value: '新しいタイトル' } });
     expect(titleInput).toHaveValue('新しいタイトル');
 
@@ -179,7 +179,7 @@ describe('TaskUpdate', () => {
     expect(dueDateInput).toHaveValue('2024-12-31');
 
     // ステータスの選択をテスト
-    const statusSelect = screen.getByLabelText('ステータス');
+    const statusSelect = screen.getByLabelText('ステータス*');
     fireEvent.change(statusSelect, { target: { value: 'Doing' } });
     expect(statusSelect).toHaveValue('Doing');
   });
@@ -223,7 +223,7 @@ describe('TaskUpdate', () => {
 
     // フォームに入力
     await userEvent.type(
-      screen.getByLabelText('タイトル'),
+      screen.getByLabelText('タイトル*'),
       '更新されたタイトル',
     );
 
