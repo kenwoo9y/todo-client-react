@@ -33,7 +33,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     <form role="form" onSubmit={onSubmit}>
       <div className="mb-4">
         <label htmlFor="title" className="mb-2 block text-sm font-bold">
-          タイトル
+          タイトル*
         </label>
         <input
           type="text"
@@ -74,7 +74,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       </div>
       <div className="mb-4">
         <label htmlFor="status" className="mb-2 block text-sm font-bold">
-          ステータス
+          ステータス*
         </label>
         <select
           id="status"
