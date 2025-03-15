@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { Task } from '@/types/task';
+import { EditIcon } from '../../../components/ui/EditIcon/EditIcon';
+import { DeleteIcon } from '../../../components/ui/DeleteIcon/DeleteIcon';
 
 // モックデータ
 const mockTask: Task = {
@@ -42,6 +44,10 @@ const MockedTaskDetail = () => {
 
   return (
     <div className="w-full">
+      <div className="mb-4 flex justify-end gap-2">
+        <EditIcon onClick={() => console.log(`Edit task ${mockTask.id}`)} />
+        <DeleteIcon onClick={() => console.log(`Delete task ${mockTask.id}`)} />
+      </div>
       <h1 className="mb-4 text-2xl font-bold">タスク詳細</h1>
       <table className="min-w-full border-collapse">
         <tbody>
