@@ -239,4 +239,32 @@ describe('TaskUpdate', () => {
     // スパイをクリーンアップ
     consoleSpy.mockRestore();
   });
+
+  it('更新成功時にonSuccessコールバックが呼ばれる', async () => {
+    const onSuccessMock = vi.fn();
+    mockMutate.mockImplementation((_, options) => {
+      options.onSuccess();
+    });
+
+    render(
+      <TaskUpdate
+        task={{
+          ...mockTask,
+          created_at: '2024-01-01T00:00:00Z',
+          updated_at: '2024-01-01T00:00:00Z',
+        }}
+        onSuccess={onSuccessMock}
+      />,
+    );
+
+    // モーダルを開く
+    fireEvent.click(screen.getByTestId('edit-icon'));
+
+    // フォームを送信
+    fireEvent.click(screen.getByText('更新'));
+
+    await waitFor(() => {
+      expect(onSuccessMock).toHaveBeenCalled();
+    });
+  });
 });

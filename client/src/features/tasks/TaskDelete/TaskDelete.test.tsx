@@ -103,4 +103,27 @@ describe('TaskDelete', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('削除成功時にonSuccessコールバックが呼ばれる', async () => {
+    const onSuccessMock = vi.fn();
+    render(<TaskDelete task={mockTask} onSuccess={onSuccessMock} />);
+
+    // モーダルを開く
+    const deleteIcon = screen.getByTestId('delete-icon');
+    fireEvent.click(deleteIcon);
+
+    // 削除ボタンをクリック
+    const deleteButton = screen.getByText('削除');
+    fireEvent.click(deleteButton);
+
+    // mutateを呼び出した時のコールバックを実行
+    const mutateCallback = mockMutate.mock.calls[0][1]?.onSuccess;
+    if (mutateCallback) {
+      mutateCallback();
+    }
+
+    await waitFor(() => {
+      expect(onSuccessMock).toHaveBeenCalled();
+    });
+  });
 });

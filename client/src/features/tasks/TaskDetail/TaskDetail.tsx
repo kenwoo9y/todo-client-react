@@ -32,7 +32,11 @@ export const TaskDetail: React.FC = () => {
       {/* 操作ボタン */}
       <div className="mb-4 flex justify-end gap-2">
         <TaskUpdate task={task} onSuccess={refetch} />
-        <TaskDelete task={task} onSuccess={handleDeleteSuccess} />
+        <TaskDelete
+          task={task}
+          onSuccess={handleDeleteSuccess}
+          data-testid="task-delete"
+        />
       </div>
 
       {/* ページタイトル */}
