@@ -2,7 +2,7 @@ export function formatDateTime(originalDateTime: string | null | undefined) {
   // originalDateTime が null、undefined、または空文字の場合は空文字を返す
   if (!originalDateTime) return '';
 
-  const date = new Date(originalDateTime);
+  const date = new Date(originalDateTime + 'Z');
 
   // 日本時間に変換
   const options: Intl.DateTimeFormatOptions = {
