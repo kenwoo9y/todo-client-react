@@ -11,8 +11,10 @@ describe('Header', () => {
       </BrowserRouter>,
     );
 
-    // タイトルの確認
-    expect(screen.getByText('ToDo App')).toBeInTheDocument();
+    // タイトルの確認（リンクとして存在することを確認）
+    const titleLink = screen.getByRole('link', { name: 'ToDo App' });
+    expect(titleLink).toBeInTheDocument();
+    expect(titleLink).toHaveAttribute('href', '/');
 
     // サインアウトボタンの確認
     expect(screen.getByText('Sign Out')).toBeInTheDocument();
