@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { formatDateTime } from './dateUtils';
 
-describe('formatDate', () => {
+describe('formatDateTime', () => {
   it('should format date correctly', () => {
     const originalDateTime = '2021-01-01T00:00:00.000';
     const formattedDate = formatDateTime(originalDateTime);
