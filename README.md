@@ -47,6 +47,7 @@
 - テストカバレッジ:
     ```
     $ make test-coverage
+    ```
 
 ### Storybook
 - Storybookサーバーの起動:
