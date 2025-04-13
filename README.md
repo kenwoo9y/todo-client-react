@@ -41,8 +41,7 @@ This is a ToDo Web Client built with React, offering a seamless and intuitive us
 - [Yarn](https://yarnpkg.com/) - Node.js package manager
 - [Vite](https://vitejs.dev/) v5.3.1 - Next generation frontend build tool
 - [Storybook](https://storybook.js.org/) v8.4.7 - Frontend workshop for UI development
-- [Docker](https://www.docker.com/) - Containerization platform
-- [Docker Compose](https://docs.docker.com/compose/) - Tool for defining and running multi-container Docker applications
+- [Docker](https://www.docker.com/) with Compose - Containerization platform for building and managing applications
 
 ### Testing & Quality Assurance
 - [Vitest](https://vitest.dev/) v2.1.8 - Vite-native unit testing framework
