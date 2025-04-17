@@ -1,4 +1,4 @@
-.PHONY: help build-local up down logs ps 
+.PHONY: help build-local up down logs ps test test-coverage lint-check lint-fix format-check format-fix storybook
 .DEFAULT_GOAL := help
 
 build-local: ## Build docker image to local development
