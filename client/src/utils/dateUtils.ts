@@ -4,7 +4,7 @@ export function formatDateTime(originalDateTime: string | null | undefined) {
 
   // すでにZが付いているかチェック
   const date = new Date(
-    originalDateTime.endsWith('Z') ? originalDateTime : originalDateTime + 'Z'
+    originalDateTime.endsWith('Z') ? originalDateTime : originalDateTime + 'Z',
   );
 
   // 日本時間に変換
