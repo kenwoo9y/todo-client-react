@@ -55,7 +55,7 @@ export const TablePagination: React.FC<TaskTablePaginationProps> = ({
         >
           <ChevronLeft className="size-5" />
         </button>
-        <span className="flex items-center gap-1">
+        <span className="flex items-center gap-1" data-testid="pagination-info">
           <span>{table.getState().pagination.pageIndex + 1}</span>
           <span>/</span>
           <span>{table.getPageCount()}</span>
