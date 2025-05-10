@@ -24,6 +24,7 @@ import { useNavigate } from 'react-router-dom';
 export const TaskTable: React.FC = () => {
   const [sorting, setSorting] = useState<SortingState>([]); // ソート状態
   const [pageSize, setPageSize] = useState(10); // ページサイズの状態
+  const [pageIndex, setPageIndex] = useState(0); // ページインデックスの状態
 
   // APIからタスクを取得
   const { data: tasks, isLoading, error, refetch } = useFetchTasks();
@@ -41,13 +42,23 @@ export const TaskTable: React.FC = () => {
       sorting,
       pagination: {
         pageSize,
-        pageIndex: 0,
+        pageIndex,
       },
     },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
     getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: (updater) => {
+      if (typeof updater === 'function') {
+        const newState = updater({
+          pageIndex,
+          pageSize,
+        });
+        setPageIndex(newState.pageIndex);
+        setPageSize(newState.pageSize);
+      }
+    },
   });
 
   if (isLoading) return <div>Loading...</div>;
