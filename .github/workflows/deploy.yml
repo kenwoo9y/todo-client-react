@@ -1,0 +1,82 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    branches:
+      - dev
+      - stg
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy (dev, stg, prod)'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - stg
+          - prod
+
+defaults:
+  run:
+    working-directory: ./client
+
+jobs:
+  gcp-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # Workload Identity Federationに必要
+    environment:
+      name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.environment || github.ref_name }}
+    env:
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCS_BUCKET_NAME: ${{ secrets.GCS_BUCKET_NAME }}
+      WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.WIF_PROVIDER }}
+      SERVICE_ACCOUNT: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+    steps:
+      # コードのチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Node.jsのセットアップ
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 依存関係のインストール
+      - name: Install dependencies
+        run: yarn install
+
+      # ビルドの実行（環境変数をビルド時に埋め込む）
+      - name: Build application
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run: yarn build
+
+      # Google Cloud認証（Workload Identity Federation）
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+
+      # Google Cloud SDKのセットアップ
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      # Cloud Storageバケットへのアップロード
+      - name: Upload to Cloud Storage
+        run: |
+          gsutil -m rsync -r -d ./dist gs://${{ env.GCS_BUCKET_NAME }}
+
+      # Cloud CDNのキャッシュ無効化（オプション）
+      - name: Invalidate Cloud CDN cache
+        run: |
+          gcloud compute url-maps list --format="value(name)" | while read url_map; do
+            gcloud compute url-maps invalidate-cdn-cache $url_map --path="/*" || true
+          done
+        continue-on-error: true
