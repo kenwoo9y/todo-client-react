@@ -66,10 +66,6 @@ jobs:
           tenant-id: ${{ env.AZURE_TENANT_ID }}
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
-      # Azure CLIのセットアップ
-      - name: Set up Azure CLI
-        uses: azure/setup-az-cli@v2
-
       # Blob Storageへのアップロード
       - name: Upload to Blob Storage
         run: |
