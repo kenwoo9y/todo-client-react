@@ -55,8 +55,6 @@ Configure the following secrets for each environment (dev, stg, prod):
 
 **Workflow File**: `.github/workflows/deploy-azure.yml`
 
-**Note**: The workflow file is currently in the `disabled-workflows` directory. To enable it, move it to `.github/workflows/deploy-azure.yml`.
-
 ### Automatic Deployment via Branch Push
 
 Pushing to the following branches will automatically trigger deployments:
@@ -76,3 +74,79 @@ The workflow is triggered by the `push` event on these branches.
 5. Click "Run workflow" button
 
 **Note**: The Azure Storage account must be configured for static website hosting. After deployment, your application will be accessible via the static website endpoint URL (e.g., `https://{STORAGE_ACCOUNT_NAME}.z13.web.core.windows.net`).
+
+---
+このドキュメントでは、ReactアプリケーションをMicrosoft Azureにデプロイする方法について説明する。
+
+## 目次
+
+1. [GitHub Secrets の設定](#github-secrets-の設定)
+2. [デプロイメント手順](#デプロイメント手順)
+
+## GitHub Secrets の設定
+
+GitHub ActionsからMicrosoft Azureにデプロイするには、以下のシークレットを設定する必要がある。
+
+### 必要なシークレット
+
+各環境（dev、stg、prod）に対して以下のシークレットを設定する：
+
+1. **`AZURE_CLIENT_ID`**: Azure Service Principal クライアントID
+   - Azure Portal → 「Azure Active Directory」→ 「アプリの登録」→ アプリを選択 → 「概要」から取得
+   - 例: `12345678-1234-1234-1234-123456789abc`
+
+2. **`AZURE_TENANT_ID`**: Azure Active Directory テナントID
+   - Azure Portal → 「Azure Active Directory」→ 「概要」から取得
+   - 例: `87654321-4321-4321-4321-cba987654321`
+
+3. **`AZURE_SUBSCRIPTION_ID`**: Azure サブスクリプションID
+   - Azure Portal → 「サブスクリプション」→ サブスクリプションを選択 → 「概要」から取得
+   - 例: `abcdef12-3456-7890-abcd-ef1234567890`
+
+4. **`AZURE_STORAGE_ACCOUNT_NAME`**: Azure Storage アカウント名
+   - 静的サイトホスティング用のストレージアカウント名
+   - 例: `todoclientdev`、`todoclientstg`、`todoclientprod`
+   - グローバルに一意で、小文字の英数字のみである必要があります
+
+5. **`AZURE_STORAGE_CONTAINER_NAME`**: Azure Storage コンテナ名
+   - ストレージアカウント内のコンテナ名（静的ウェブサイトホスティングの場合は通常 `$web`）
+   - 例: `$web`
+
+6. **`VITE_API_URL`**: バックエンドAPI URL（ビルド時に埋め込まれる環境変数）
+   - 各環境のバックエンドAPI URL
+   - 例: `https://todo-api-dev.{region}.azurecontainerapps.io`、`https://todo-api-stg.{region}.azurecontainerapps.io`、`https://todo-api-prod.{region}.azurecontainerapps.io`
+
+### シークレットの設定方法
+
+1. GitHubリポジトリ → 「Settings」→ 「Secrets and variables」→ 「Actions」に移動
+2. 「New repository secret」をクリック
+3. 各環境に対して以下のシークレットを作成：
+   - `dev`環境: `AZURE_CLIENT_ID`、`AZURE_TENANT_ID`、`AZURE_SUBSCRIPTION_ID`、`AZURE_STORAGE_ACCOUNT_NAME`、`AZURE_STORAGE_CONTAINER_NAME`、`VITE_API_URL`
+   - `stg`環境: devと同じシークレット（ステージング環境に適した値）
+   - `prod`環境: devと同じシークレット（本番環境に適した値）
+
+**注意**: `AZURE_CLIENT_ID`、`AZURE_TENANT_ID`、`AZURE_SUBSCRIPTION_ID`などの一部のシークレットは環境間で共有される場合があるが、`AZURE_STORAGE_ACCOUNT_NAME`や`VITE_API_URL`などは環境ごとに異なる値を設定する必要がある。
+
+## デプロイメント手順
+
+**ワークフローファイル**: `.github/workflows/deploy-azure.yml`
+
+### ブランチプッシュによる自動デプロイメント
+
+以下のブランチにプッシュすると、自動的にデプロイメントがトリガーされる：
+
+- `dev`ブランチ → dev環境にデプロイ
+- `stg`ブランチ → stg環境にデプロイ
+- `main`ブランチ → prod環境にデプロイ
+
+これらのブランチでの`push`イベントによってワークフローがトリガーされる。
+
+### 手動デプロイメント（GitHub Actions）
+
+1. GitHubリポジトリ → 「Actions」タブに移動
+2. 「Deploy to Microsoft Azure」ワークフローを選択
+3. 「Run workflow」をクリック
+4. デプロイする環境（dev、stg、prod）を選択
+5. 「Run workflow」ボタンをクリック
+
+**注意**: Azure Storageアカウントは静的ウェブサイトホスティング用に設定されている必要がある。デプロイメント後、アプリケーションは静的ウェブサイトエンドポイントURL（例: `https://{STORAGE_ACCOUNT_NAME}.z13.web.core.windows.net`）からアクセス可能になる。

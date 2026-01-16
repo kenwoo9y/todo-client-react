@@ -69,3 +69,74 @@ The workflow is triggered by the `push` event on these branches.
 5. Click "Run workflow" button
 
 **Note**: The Cloud Storage bucket must be configured for static site hosting. If Cloud CDN is configured, the cache will be automatically invalidated after deployment.
+
+---
+このドキュメントでは、ReactアプリケーションをGoogle Cloudにデプロイする方法について説明する。
+
+## 目次
+
+1. [GitHub Secrets の設定](#github-secrets-の設定)
+2. [デプロイメント手順](#デプロイメント手順)
+
+## GitHub Secrets の設定
+
+GitHub ActionsからGoogle Cloudにデプロイするには、以下のシークレットを設定する必要がある。
+
+### 必要なシークレット
+
+各環境（dev、stg、prod）に対して以下のシークレットを設定する：
+
+1. **`GCP_PROJECT_ID`**: Google Cloud プロジェクトID
+   - Google Cloud Console → 「IAM & Admin」→ 「設定」から取得
+   - 例: `my-project-id`
+
+2. **`GCS_BUCKET_NAME`**: Cloud Storage バケット名
+   - 静的サイトホスティング用のCloud Storageバケット名
+   - 例: `todo-client-dev`、`todo-client-stg`、`todo-client-prod`
+
+3. **`WIF_PROVIDER`**: Workload Identity Federation プロバイダー
+   - 形式: `projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_NAME/providers/PROVIDER_NAME`
+   - Google Cloud Console → 「IAM & Admin」→ 「Workload Identity Federation」から取得
+
+4. **`WIF_SERVICE_ACCOUNT`**: Workload Identity Federation サービスアカウント
+   - 形式: `SERVICE_ACCOUNT_EMAIL@PROJECT_ID.iam.gserviceaccount.com`
+   - Google Cloud Console → 「IAM & Admin」→ 「サービスアカウント」から取得
+
+5. **`VITE_API_URL`**: バックエンドAPI URL（ビルド時に埋め込まれる環境変数）
+   - 各環境のバックエンドAPI URL
+   - 例: `https://todo-api-dev-xxxxx.run.app`、`https://todo-api-stg-xxxxx.run.app`、`https://todo-api-prod-xxxxx.run.app`
+
+### シークレットの設定方法
+
+1. GitHubリポジトリ → 「Settings」→ 「Secrets and variables」→ 「Actions」に移動
+2. 「New repository secret」をクリック
+3. 各環境に対して以下のシークレットを作成：
+   - `dev`環境: `GCP_PROJECT_ID`、`GCS_BUCKET_NAME`、`WIF_PROVIDER`、`WIF_SERVICE_ACCOUNT`、`VITE_API_URL`
+   - `stg`環境: devと同じシークレット（ステージング環境に適した値）
+   - `prod`環境: devと同じシークレット（本番環境に適した値）
+
+**注意**: `GCP_PROJECT_ID`、`WIF_PROVIDER`、`WIF_SERVICE_ACCOUNT`などの一部のシークレットは環境間で共有される場合があるが、`GCS_BUCKET_NAME`や`VITE_API_URL`などは環境ごとに異なる値を設定する必要がある。
+
+## デプロイメント手順
+
+**ワークフローファイル**: `.github/workflows/deploy-gcp.yml`
+
+### ブランチプッシュによる自動デプロイメント
+
+以下のブランチにプッシュすると、自動的にデプロイメントがトリガーされる：
+
+- `dev`ブランチ → dev環境にデプロイ
+- `stg`ブランチ → stg環境にデプロイ
+- `main`ブランチ → prod環境にデプロイ
+
+これらのブランチでの`push`イベントによってワークフローがトリガーされる。
+
+### 手動デプロイメント（GitHub Actions）
+
+1. GitHubリポジトリ → 「Actions」タブに移動
+2. 「Deploy to Google Cloud」ワークフローを選択
+3. 「Run workflow」をクリック
+4. デプロイする環境（dev、stg、prod）を選択
+5. 「Run workflow」ボタンをクリック
+
+**注意**: Cloud Storageバケットは静的サイトホスティング用に設定されている必要がある。Cloud CDNが設定されている場合、デプロイメント後にキャッシュが自動的に無効化される。
